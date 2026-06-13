@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tango-card/main/json-schema/tango-raas-catalog-item.json",
+  "title": "Tango RaaS Catalog Item",
+  "description": "Schema for a reward item in the Tango RaaS catalog",
+  "type": "object",
+  "properties": {
+    "utid": {
+      "type": "string",
+      "description": "Universal Token ID — unique identifier for this reward item"
+    },
+    "rewardName": {
+      "type": "string",
+      "description": "Name of the reward product"
+    },
+    "brandName": {
+      "type": "string",
+      "description": "Name of the brand offering the reward"
+    },
+    "brandKey": {
+      "type": "string",
+      "description": "Unique key identifier for the brand"
+    },
+    "currencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 currency code for the reward denomination"
+    },
+    "minValue": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Minimum denomination value for open-denomination rewards"
+    },
+    "maxValue": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Maximum denomination value for open-denomination rewards"
+    },
+    "fixedValue": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Fixed denomination value; null for open-denomination rewards"
+    },
+    "valueType": {
+      "type": "string",
+      "enum": ["FIXED_VALUE", "VARIABLE_VALUE"],
+      "description": "Whether the reward has a fixed or variable denomination"
+    },
+    "rewardType": {
+      "type": "string",
+      "description": "Category type of the reward (e.g. gift card, prepaid card, donation)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "INACTIVE"],
+      "description": "Availability status of the reward item"
+    },
+    "countries": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}$"
+      },
+      "description": "ISO 3166-1 alpha-2 country codes where this reward is available"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the catalog item was added"
+    }
+  },
+  "required": ["utid", "rewardName", "brandName", "brandKey", "currencyCode"]
+}

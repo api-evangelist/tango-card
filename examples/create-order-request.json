@@ -1,0 +1,15 @@
+{
+  "customerIdentifier": "ACME-Corp",
+  "accountIdentifier": "ACME-Rewards-USD",
+  "amount": 25.00,
+  "currencyCode": "USD",
+  "utid": "U280985",
+  "recipientInfo": {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "jane.smith@example.com"
+  },
+  "sendEmail": true,
+  "notes": "Q4 employee recognition award",
+  "externalRefID": "HR-AWARD-2026-0042"
+}

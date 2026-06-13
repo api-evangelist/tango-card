@@ -1,0 +1,160 @@
+{
+  "vocabularyId": "tango-raas-vocabulary",
+  "title": "Tango RaaS API Vocabulary",
+  "description": "Domain vocabulary for the Tango Rewards as a Service (RaaS) API",
+  "provider": "Tango Card",
+  "version": "v2",
+  "source": "https://developers.tangocard.com/docs/api-endpoint-overview",
+  "terms": [
+    {
+      "term": "RaaS",
+      "definition": "Rewards as a Service — Tango Card's branded API offering for programmatic reward distribution",
+      "domain": "Platform"
+    },
+    {
+      "term": "UTID",
+      "definition": "Universal Token ID — a unique identifier assigned to each reward item in the Tango catalog, used when placing orders",
+      "domain": "Catalog"
+    },
+    {
+      "term": "customer",
+      "definition": "A platform-level entity representing a business or organization using the RaaS API; identified by a customerIdentifier",
+      "domain": "Account Management"
+    },
+    {
+      "term": "customerIdentifier",
+      "definition": "A unique string identifier for a customer within the Tango platform",
+      "domain": "Account Management"
+    },
+    {
+      "term": "account",
+      "definition": "A sub-entity of a customer that holds a balance in a specific currency and is used to fund reward orders",
+      "domain": "Account Management"
+    },
+    {
+      "term": "accountIdentifier",
+      "definition": "A unique string identifier for an account within the Tango platform",
+      "domain": "Account Management"
+    },
+    {
+      "term": "order",
+      "definition": "A transaction record representing the purchase and delivery of one or more rewards",
+      "domain": "Orders"
+    },
+    {
+      "term": "referenceOrderID",
+      "definition": "The unique reference identifier assigned to an order upon creation",
+      "domain": "Orders"
+    },
+    {
+      "term": "lineItem",
+      "definition": "An individual reward delivery record within an order; one order may contain multiple line items",
+      "domain": "Orders"
+    },
+    {
+      "term": "referenceLineItemId",
+      "definition": "The unique reference identifier for a specific line item within an order",
+      "domain": "Orders"
+    },
+    {
+      "term": "catalog",
+      "definition": "The full directory of available reward products (3,100+) including gift cards, prepaid cards, and charitable donations",
+      "domain": "Catalog"
+    },
+    {
+      "term": "brand",
+      "definition": "A merchant or organization that offers gift cards or rewards within the Tango catalog",
+      "domain": "Catalog"
+    },
+    {
+      "term": "brandKey",
+      "definition": "A unique identifier string for a brand within the catalog",
+      "domain": "Catalog"
+    },
+    {
+      "term": "choiceProduct",
+      "definition": "A multi-brand gift card product allowing recipients to choose from a curated set of brands",
+      "domain": "Catalog"
+    },
+    {
+      "term": "digitalTemplate",
+      "definition": "A customizable HTML email template (identified by ETID) used for reward delivery notifications",
+      "domain": "Delivery"
+    },
+    {
+      "term": "ETID",
+      "definition": "Email Template ID — unique identifier for a digital email template",
+      "domain": "Delivery"
+    },
+    {
+      "term": "creditCardDeposit",
+      "definition": "A transaction that adds funds to an account using a registered credit card",
+      "domain": "Fund Management"
+    },
+    {
+      "term": "transferFunds",
+      "definition": "An operation moving balance between accounts within the Tango platform",
+      "domain": "Fund Management"
+    },
+    {
+      "term": "lowBalanceAlert",
+      "definition": "A notification configuration that triggers when an account balance falls below a defined threshold",
+      "domain": "Account Management"
+    },
+    {
+      "term": "exchangeRate",
+      "definition": "The conversion rate between two supported currencies on the Tango platform",
+      "domain": "Currency"
+    },
+    {
+      "term": "rewardCountry",
+      "definition": "A country in which reward products are available for delivery",
+      "domain": "Catalog"
+    },
+    {
+      "term": "credentialType",
+      "definition": "The format in which a reward is delivered to the recipient (e.g., barcode, link, PIN)",
+      "domain": "Delivery"
+    },
+    {
+      "term": "reasonCode",
+      "definition": "A standardized code explaining the reason for a line item action such as cancellation or freeze",
+      "domain": "Orders"
+    },
+    {
+      "term": "freeze",
+      "definition": "A reversible hold placed on a line item that prevents reward delivery while retaining the order",
+      "domain": "Orders"
+    },
+    {
+      "term": "reissue",
+      "definition": "The re-generation of a reward credential for a line item, producing a new code or link",
+      "domain": "Orders"
+    },
+    {
+      "term": "resend",
+      "definition": "Retransmit the reward delivery email for an existing order or line item",
+      "domain": "Delivery"
+    },
+    {
+      "term": "sandbox",
+      "definition": "The integration environment (https://integration-api.tangocard.com/raas/v2) for testing without real transactions",
+      "domain": "Platform"
+    },
+    {
+      "term": "basicAuth",
+      "definition": "HTTP Basic Authentication using a platform name and API key, the primary authentication mechanism for the RaaS API",
+      "domain": "Authentication"
+    },
+    {
+      "term": "serviceAccountToken",
+      "definition": "A bearer token obtained via OAuth for more secure, token-based API authentication",
+      "domain": "Authentication"
+    },
+    {
+      "term": "webhook",
+      "definition": "An HTTP callback configured to receive real-time event notifications (e.g., order fulfillment, line item status changes) from the Tango platform",
+      "domain": "Events"
+    }
+  ]
+}

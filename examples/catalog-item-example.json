@@ -1,0 +1,15 @@
+{
+  "utid": "U280985",
+  "rewardName": "Amazon.com Gift Card",
+  "brandName": "Amazon",
+  "brandKey": "AMZN",
+  "currencyCode": "USD",
+  "minValue": 1.00,
+  "maxValue": 2000.00,
+  "fixedValue": null,
+  "valueType": "VARIABLE_VALUE",
+  "rewardType": "gift card",
+  "status": "ACTIVE",
+  "countries": ["US"],
+  "createdAt": "2020-01-01T00:00:00Z"
+}

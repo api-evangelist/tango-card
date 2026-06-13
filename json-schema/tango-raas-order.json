@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tango-card/main/json-schema/tango-raas-order.json",
+  "title": "Tango RaaS Order",
+  "description": "Schema for a Tango Rewards as a Service (RaaS) reward order",
+  "type": "object",
+  "properties": {
+    "referenceOrderID": {
+      "type": "string",
+      "description": "Unique reference identifier for the order"
+    },
+    "orderStatus": {
+      "type": "string",
+      "enum": ["PENDING", "FULFILLED", "FAILED", "CANCELLED"],
+      "description": "Current status of the order"
+    },
+    "customerIdentifier": {
+      "type": "string",
+      "description": "Identifier of the customer who placed the order"
+    },
+    "accountIdentifier": {
+      "type": "string",
+      "description": "Identifier of the account charged for the order"
+    },
+    "amount": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total order amount"
+    },
+    "currencyCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 three-letter currency code"
+    },
+    "utid": {
+      "type": "string",
+      "description": "Universal Token ID for the reward item ordered"
+    },
+    "recipientInfo": {
+      "$ref": "#/$defs/RecipientInfo"
+    },
+    "sendEmail": {
+      "type": "boolean",
+      "description": "Whether the reward was sent via email"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal notes associated with the order"
+    },
+    "externalRefID": {
+      "type": "string",
+      "description": "External reference identifier for cross-system tracking"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the order was created"
+    },
+    "lineItems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/LineItem"
+      },
+      "description": "Line items contained in this order"
+    }
+  },
+  "required": ["referenceOrderID", "orderStatus", "customerIdentifier", "accountIdentifier", "amount", "utid"],
+  "$defs": {
+    "RecipientInfo": {
+      "type": "object",
+      "description": "Information about the reward recipient",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "description": "Recipient first name"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Recipient last name"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Recipient email address for reward delivery"
+        }
+      }
+    },
+    "LineItem": {
+      "type": "object",
+      "description": "An individual line item within a reward order",
+      "properties": {
+        "referenceLineItemId": {
+          "type": "string",
+          "description": "Unique reference identifier for the line item"
+        },
+        "referenceOrderID": {
+          "type": "string",
+          "description": "Parent order reference identifier"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING", "FULFILLED", "CANCELLED", "FROZEN", "FAILED"],
+          "description": "Current status of the line item"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Line item monetary amount"
+        },
+        "currencyCode": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "ISO 4217 three-letter currency code"
+        },
+        "utid": {
+          "type": "string",
+          "description": "Universal Token ID of the specific reward item"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the line item was created"
+        }
+      },
+      "required": ["referenceLineItemId", "status", "amount", "utid"]
+    }
+  }
+}

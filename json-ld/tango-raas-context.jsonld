@@ -1,0 +1,158 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "tango": "https://developers.tangocard.com/vocab#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Order": "tango:Order",
+    "LineItem": "tango:LineItem",
+    "Customer": "tango:Customer",
+    "Account": "tango:Account",
+    "CatalogItem": "tango:CatalogItem",
+    "ChoiceProduct": "tango:ChoiceProduct",
+    "DigitalTemplate": "tango:DigitalTemplate",
+    "LowBalanceAlert": "tango:LowBalanceAlert",
+    "CreditCard": "tango:CreditCard",
+    "CreditCardDeposit": "tango:CreditCardDeposit",
+    "RecipientInfo": "tango:RecipientInfo",
+
+    "referenceOrderID": {
+      "@id": "tango:referenceOrderID",
+      "@type": "xsd:string"
+    },
+    "orderStatus": {
+      "@id": "tango:orderStatus",
+      "@type": "xsd:string"
+    },
+    "referenceLineItemId": {
+      "@id": "tango:referenceLineItemId",
+      "@type": "xsd:string"
+    },
+    "customerIdentifier": {
+      "@id": "tango:customerIdentifier",
+      "@type": "xsd:string"
+    },
+    "accountIdentifier": {
+      "@id": "tango:accountIdentifier",
+      "@type": "xsd:string"
+    },
+    "displayName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "utid": {
+      "@id": "tango:utid",
+      "@type": "xsd:string"
+    },
+    "amount": {
+      "@id": "schema:price",
+      "@type": "xsd:decimal"
+    },
+    "currencyCode": {
+      "@id": "schema:priceCurrency",
+      "@type": "xsd:string"
+    },
+    "currentBalance": {
+      "@id": "tango:currentBalance",
+      "@type": "xsd:decimal"
+    },
+    "rewardName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "brandName": {
+      "@id": "schema:brand",
+      "@type": "xsd:string"
+    },
+    "brandKey": {
+      "@id": "tango:brandKey",
+      "@type": "xsd:string"
+    },
+    "minValue": {
+      "@id": "schema:minPrice",
+      "@type": "xsd:decimal"
+    },
+    "maxValue": {
+      "@id": "schema:maxPrice",
+      "@type": "xsd:decimal"
+    },
+    "fixedValue": {
+      "@id": "tango:fixedValue",
+      "@type": "xsd:decimal"
+    },
+    "sendEmail": {
+      "@id": "tango:sendEmail",
+      "@type": "xsd:boolean"
+    },
+    "externalRefID": {
+      "@id": "tango:externalRefID",
+      "@type": "xsd:string"
+    },
+    "notes": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "firstName": {
+      "@id": "schema:givenName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "schema:familyName",
+      "@type": "xsd:string"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "status": {
+      "@id": "tango:status",
+      "@type": "xsd:string"
+    },
+    "threshold": {
+      "@id": "tango:threshold",
+      "@type": "xsd:decimal"
+    },
+    "countries": {
+      "@id": "tango:countries",
+      "@container": "@set"
+    },
+    "lineItems": {
+      "@id": "tango:lineItems",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "recipientInfo": {
+      "@id": "tango:recipientInfo",
+      "@type": "@id"
+    },
+    "token": {
+      "@id": "tango:creditCardToken",
+      "@type": "xsd:string"
+    },
+    "depositId": {
+      "@id": "tango:depositId",
+      "@type": "xsd:string"
+    },
+    "etid": {
+      "@id": "tango:etid",
+      "@type": "xsd:string"
+    },
+    "balanceAlertID": {
+      "@id": "tango:balanceAlertID",
+      "@type": "xsd:string"
+    },
+    "reasonCode": {
+      "@id": "tango:reasonCode",
+      "@type": "xsd:string"
+    },
+    "credentialType": {
+      "@id": "tango:credentialType",
+      "@type": "xsd:string"
+    }
+  }
+}

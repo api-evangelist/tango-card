@@ -1,0 +1,29 @@
+{
+  "referenceOrderID": "ORD-20260613-001",
+  "orderStatus": "FULFILLED",
+  "customerIdentifier": "ACME-Corp",
+  "accountIdentifier": "ACME-Rewards-USD",
+  "amount": 25.00,
+  "currencyCode": "USD",
+  "utid": "U280985",
+  "recipientInfo": {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "jane.smith@example.com"
+  },
+  "sendEmail": true,
+  "notes": "Q4 employee recognition award",
+  "externalRefID": "HR-AWARD-2026-0042",
+  "createdAt": "2026-06-13T10:32:00Z",
+  "lineItems": [
+    {
+      "referenceLineItemId": "LI-20260613-001-1",
+      "referenceOrderID": "ORD-20260613-001",
+      "status": "FULFILLED",
+      "amount": 25.00,
+      "currencyCode": "USD",
+      "utid": "U280985",
+      "createdAt": "2026-06-13T10:32:01Z"
+    }
+  ]
+}
