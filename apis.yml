@@ -1,0 +1,70 @@
+aid: tango-card
+name: Tango Card
+description: Tango Card is a digital rewards and gift card distribution platform providing a REST API (Rewards as a Service, RaaS) for sending gift cards, managing reward orders, tracking delivery, and accessing a global catalog of 3,100+ reward options including e-gift cards, prepaid cards, and charitable donations.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/tango-card/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Gift Cards
+  - Rewards
+  - Incentives
+  - Digital Rewards
+  - Prepaid Cards
+  - Payments
+apis:
+  - aid: tango-card:tango-raas-api
+    name: Tango RaaS API
+    description: The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://developers.tangocard.com/
+    baseURL: https://api.tangocard.com/raas/v2
+    tags:
+      - Gift Cards
+      - Rewards
+      - Incentives
+      - Orders
+      - Catalog
+    properties:
+      - type: Documentation
+        url: https://developers.tangocard.com/docs/api-endpoint-overview
+      - type: OpenAPI
+        url: https://developers.tangocard.com/llms.txt
+      - type: Sandbox
+        url: https://integration-api.tangocard.com/raas/v2
+      - type: Authentication
+        url: https://developers.tangocard.com/docs/get-started
+      - type: Webhooks
+        url: https://developers.tangocard.com/docs/webhooks
+      - type: BestPractices
+        url: https://developers.tangocard.com/docs/best-practices
+    contact:
+      - FN: Tango Card Developer Support
+        email: devsupport@tangocard.com
+common:
+  - type: Website
+    url: https://www.tangocard.com
+  - type: Documentation
+    url: https://developers.tangocard.com/
+  - type: GitHubOrg
+    url: https://github.com/tangocard
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/tango-card-inc
+  - type: Blog
+    url: https://www.tangocard.com/blog
+  - type: Pricing
+    url: https://www.tangocard.com/solutions/raas-api
+  - type: StatusPage
+    url: https://status.tango.us/
+  - type: X
+    url: https://x.com/tangocard
+  - type: Plans
+    url: plans/tango-card-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/tango-card-rate-limits.yml
+  - type: FinOps
+    url: finops/tango-card-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

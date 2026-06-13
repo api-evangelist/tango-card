@@ -1,0 +1,23 @@
+name: Tango Card Plans and Pricing
+description: Tango Card (Tango) does not publish fixed subscription tiers. Access to the RaaS API is granted through a consultative sales process. The only recurring cost is the face value of rewards sent; platform and API access fees are determined per agreement. Prospective users contact sales@tangocard.com or request a demo to obtain a custom quote.
+url: https://www.tangocard.com/solutions/raas-api
+plans:
+  - name: RaaS API (Custom)
+    description: Full access to the Rewards as a Service REST API including catalog management, order placement, fund management, webhooks, and reporting. Pricing is negotiated directly with Tango sales and typically covers only the face value of rewards delivered. Additional fees for setup, custom branding, or high-volume commitments may apply.
+    price: custom
+    unit: per agreement
+    features:
+      - Access to 3100+ e-gift cards, prepaid cards, charitable donations
+      - Sandbox and production environments
+      - HTTP Basic Auth and OAuth 2.0 authentication
+      - Order management and resend capabilities
+      - Webhook event notifications
+      - Low-balance alerts
+      - Digital template management
+      - Multi-currency and exchange rate support
+      - Bulk CSV order uploads
+      - Dedicated customer success and developer support
+    contact:
+      email: sales@tangocard.com
+      phone: "+1-925-738-3100"
+      demo: https://www.tangocard.com/request-a-demo

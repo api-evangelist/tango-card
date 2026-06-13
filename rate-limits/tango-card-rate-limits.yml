@@ -1,0 +1,22 @@
+name: Tango Card API Rate Limits
+description: Tango Card enforces a 1 TPS (transaction per second) rate limit across all API endpoints. Rate-limit headers are not publicly documented. The recommended pattern for handling rate limit errors on order placement is to pause briefly and retry using the idempotent externalRefID parameter to prevent duplicate orders.
+url: https://developers.tangocard.com/docs/best-practices
+limits:
+  - name: Global Rate Limit
+    scope: all endpoints
+    limit: 1
+    unit: requests per second (TPS)
+    description: All API calls are subject to a 1 TPS rate limit. Exceeding this limit will result in a rate limit error response.
+  - name: Order Idempotency
+    scope: POST /orders
+    description: Use the externalRefID parameter (max 100 alphanumeric characters) to ensure idempotent order creation. If omitted, the X-REQUEST-ID header is used as the reference. A successful new order returns HTTP 201; a duplicate returns HTTP 200.
+retry:
+  strategy: exponential backoff recommended
+  description: When a rate limit or 5XX error is received during order placement, wait at least 1 second before retrying. Always include the original externalRefID to prevent duplicate reward delivery.
+headers:
+  rate_limit_header: not publicly documented
+  retry_after_header: not publicly documented
+notes:
+  - Rate limits are documented in the best-practices guide but rate-limit response headers are not described publicly.
+  - Production throughput assumptions beyond 1 TPS must be validated directly with Tango Card support before building high-volume automation.
+  - Browser-based POST calls are blocked; all API interactions must be server-side.

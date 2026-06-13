@@ -1,0 +1,41 @@
+name: Tango Card FinOps
+description: Tango Card's cost model is primarily consumption-based. The platform charges only the face value of rewards delivered; there are no published subscription or per-API-call fees. Budget control is achieved through pre-funded accounts with low-balance alerts, account-level fund segregation, and order-level spend controls.
+url: https://www.tangocard.com/solutions/raas-api
+cost_model:
+  type: consumption-based
+  primary_cost: face value of rewards sent
+  platform_fee: negotiated per agreement (typically zero for standard access)
+  setup_fee: possible for custom integrations; confirmed via sales
+  per_api_call_fee: none publicly documented
+budget_controls:
+  - name: Pre-funded Accounts
+    description: Customers must pre-fund their Tango account before placing orders. Funds are deducted at order time, providing a natural spending cap.
+    endpoint: POST /creditCardDeposits
+  - name: Low Balance Alerts
+    description: Configure threshold-based alerts to notify teams when account balances fall below a defined level, enabling proactive funding management.
+    endpoint: POST /customers/{customerIdentifier}/accounts/{accountIdentifier}/lowbalance
+  - name: Multi-Account Segregation
+    description: Create separate accounts per product line, campaign, or customer segment to isolate spend and enable granular reporting.
+    endpoint: POST /customers/{customerIdentifier}/accounts
+  - name: Order Cancellation and Freeze
+    description: Cancel or freeze unfulfilled line items to recover funds before reward delivery occurs.
+    endpoints:
+      - POST /lineItems/{referenceLineItemID}/cancel
+      - POST /lineItems/{referenceLineItemID}/freeze
+  - name: Fund Transfers
+    description: Transfer funds between accounts to rebalance budgets without re-funding via credit card.
+    endpoint: GET /transferFunds
+reporting:
+  - name: Order History
+    description: Retrieve full order history with filtering to reconcile spend against budget allocations.
+    endpoint: GET /orders
+  - name: Line Item Detail
+    description: Inspect individual reward deliveries including status, value, and recipient information.
+    endpoint: GET /lineItems
+  - name: Exchange Rates
+    description: Monitor real-time exchange rates for multi-currency reward programs to forecast international spend.
+    endpoint: GET /exchangerates
+notes:
+  - Tango does not publish a public pricing page; all commercial terms are established through a sales engagement.
+  - Contact sales@tangocard.com or call +1-925-738-3100 for pricing details.
+  - A free sandbox environment is available at portal.sandbox.tangocard.com for integration testing with no cost.
