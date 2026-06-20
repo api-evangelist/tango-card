@@ -1,7 +1,7 @@
 aid: tango-card
 name: Tango Card
 description: Tango Card is a digital rewards and gift card distribution platform providing a REST API (Rewards as a Service, RaaS) for sending gift cards, managing reward orders, tracking delivery, and accessing a global catalog of 3,100+ reward options including e-gift cards, prepaid cards, and charitable donations.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/tango-card/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -17,7 +17,7 @@ apis:
   - aid: tango-card:tango-raas-api
     name: Tango RaaS API
     description: The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://developers.tangocard.com/
     baseURL: https://api.tangocard.com/raas/v2
     tags:
