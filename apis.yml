@@ -43,6 +43,10 @@ apis:
       - FN: Tango Card Developer Support
         email: devsupport@tangocard.com
 common:
+  - type: Authentication
+    url: authentication/tango-card-authentication.yml
+  - type: OAuthScopes
+    url: scopes/tango-card-scopes.yml
   - type: Website
     url: https://www.tangocard.com
   - type: Documentation

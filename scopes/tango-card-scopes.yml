@@ -1,0 +1,18 @@
+generated: '2026-07-11'
+method: searched
+source: openapi/tango-raas-api-openapi.yml
+docs: https://developers.tangocard.com/docs/acquire-service-account-token
+schemes:
+- name: oAuth2
+  source: openapi/tango-raas-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.tangocard.com/oauth/token
+  description: OAuth 2.0 client credentials flow for more secure integrations
+scopes:
+- scope: raas.all
+  description: The single static scope for the Tango RaaS API; the docs state the
+    scope value is always raas.all, granting access to all Rewards as a Service
+    permissions. No granular scopes are published.
+  sources:
+  - https://developers.tangocard.com/docs/acquire-service-account-token
