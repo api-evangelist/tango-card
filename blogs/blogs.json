@@ -2,13 +2,11 @@
   "repo": "tango-card",
   "feeds": [
     {
-      "source": "https://www.tangocard.com/blog",
-      "feed_url": "",
-      "saved": 0,
-      "method": "agent-scrape"
+      "source": "https://www.linkedin.com/company/tango-card-inc",
+      "error": "HTTPError"
     }
   ],
-  "fetched": "2026-06-27T13:15:02Z",
+  "fetched": "2026-07-11T11:50:51Z",
   "post_count": 18,
   "agent_pulled": "2026-06-27"
 }
