@@ -43,6 +43,8 @@ apis:
       - FN: Tango Card Developer Support
         email: devsupport@tangocard.com
 common:
+  - type: AgenticAccess
+    url: agentic-access/tango-card-agentic-access.yml
   - type: DomainSecurity
     url: security/tango-card-domain-security.yml
   - type: Authentication
