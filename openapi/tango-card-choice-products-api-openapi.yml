@@ -1,0 +1,205 @@
+openapi: 3.1.0
+info:
+  title: Tango RaaS Accounts Choice Products API
+  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
+
+    '
+  version: v2
+  contact:
+    name: Tango Card Developer Support
+    email: devsupport@tangocard.com
+    url: https://developers.tangocard.com/
+  license:
+    name: Proprietary
+    url: https://www.tangocard.com/terms-of-service/
+servers:
+- url: https://api.tangocard.com/raas/v2
+  description: Production
+- url: https://integration-api.tangocard.com/raas/v2
+  description: Sandbox / Integration
+security:
+- basicAuth: []
+tags:
+- name: Choice Products
+  description: Choice product management
+paths:
+  /choiceProducts:
+    get:
+      operationId: listChoiceProducts
+      summary: List choice products
+      description: Retrieve all available choice products (multi-brand gift cards).
+      tags:
+      - Choice Products
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  choiceProducts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChoiceProduct'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /choiceProducts/{utid}:
+    get:
+      operationId: getChoiceProduct
+      summary: Get a choice product
+      description: Retrieve a specific choice product by UTID.
+      tags:
+      - Choice Products
+      parameters:
+      - name: utid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChoiceProduct'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /choiceProducts/{choiceProductUtid}/catalog:
+    get:
+      operationId: getChoiceProductCatalog
+      summary: Get choice product catalog
+      description: Retrieve the catalog of items available within a specific choice product.
+      tags:
+      - Choice Products
+      parameters:
+      - name: choiceProductUtid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CatalogItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    ChoiceProduct:
+      type: object
+      description: Represents a choice product (multi-brand gift card)
+      properties:
+        utid:
+          type: string
+          description: Universal Token ID for the choice product
+        displayName:
+          type: string
+          description: Human-readable name
+        minValue:
+          type: number
+          format: double
+          description: Minimum value
+        maxValue:
+          type: number
+          format: double
+          description: Maximum value
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+    CatalogItem:
+      type: object
+      description: Represents a reward item in the catalog
+      properties:
+        utid:
+          type: string
+          description: Universal Token ID for this reward item
+        rewardName:
+          type: string
+          description: Name of the reward
+        brandName:
+          type: string
+          description: Brand offering the reward
+        brandKey:
+          type: string
+          description: Unique brand identifier
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        minValue:
+          type: number
+          format: double
+          description: Minimum denomination value
+        maxValue:
+          type: number
+          format: double
+          description: Maximum denomination value
+        fixedValue:
+          type: number
+          format: double
+          description: Fixed denomination value (if applicable)
+        countries:
+          type: array
+          items:
+            type: string
+          description: Countries where reward is available
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using platform name and API key
+    oAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow for more secure integrations
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.tangocard.com/oauth/token
+          scopes: {}
+externalDocs:
+  description: Tango Developer Portal
+  url: https://developers.tangocard.com/docs/api-endpoint-overview

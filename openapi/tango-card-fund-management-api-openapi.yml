@@ -1,0 +1,312 @@
+openapi: 3.1.0
+info:
+  title: Tango RaaS Accounts Fund Management API
+  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
+
+    '
+  version: v2
+  contact:
+    name: Tango Card Developer Support
+    email: devsupport@tangocard.com
+    url: https://developers.tangocard.com/
+  license:
+    name: Proprietary
+    url: https://www.tangocard.com/terms-of-service/
+servers:
+- url: https://api.tangocard.com/raas/v2
+  description: Production
+- url: https://integration-api.tangocard.com/raas/v2
+  description: Sandbox / Integration
+security:
+- basicAuth: []
+tags:
+- name: Fund Management
+  description: Credit card deposits, registrations, and fund transfers
+paths:
+  /creditCards:
+    get:
+      operationId: listCreditCards
+      summary: List credit cards
+      description: Retrieve all registered credit cards for the platform.
+      tags:
+      - Fund Management
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  creditCards:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CreditCard'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: registerCreditCard
+      summary: Register a credit card
+      description: Register a new credit card for deposits.
+      tags:
+      - Fund Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Credit card number
+                expiration:
+                  type: string
+                  description: Card expiration in MM/YYYY format
+                billingContactInfo:
+                  type: object
+                  description: Billing contact information
+      responses:
+        '201':
+          description: Credit card registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCard'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /creditCards/{token}:
+    get:
+      operationId: getCreditCard
+      summary: Get a credit card
+      description: Retrieve a registered credit card by token.
+      tags:
+      - Fund Management
+      parameters:
+      - name: token
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCard'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /creditCardDeposits:
+    post:
+      operationId: createCreditCardDeposit
+      summary: Create a credit card deposit
+      description: Deposit funds into an account using a registered credit card.
+      tags:
+      - Fund Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - customerIdentifier
+              - accountIdentifier
+              - amount
+              - creditCardToken
+              properties:
+                customerIdentifier:
+                  type: string
+                  description: Customer identifier
+                accountIdentifier:
+                  type: string
+                  description: Account to fund
+                amount:
+                  type: number
+                  format: double
+                  description: Deposit amount
+                currencyCode:
+                  type: string
+                  description: ISO 4217 currency code
+                creditCardToken:
+                  type: string
+                  description: Registered credit card token
+      responses:
+        '201':
+          description: Deposit created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardDeposit'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /creditCardDeposits/{depositId}:
+    get:
+      operationId: getCreditCardDeposit
+      summary: Get a credit card deposit
+      description: Retrieve a specific credit card deposit by ID.
+      tags:
+      - Fund Management
+      parameters:
+      - name: depositId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardDeposit'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /creditCardUnregisters:
+    post:
+      operationId: unregisterCreditCard
+      summary: Unregister a credit card
+      description: Remove a previously registered credit card from the platform.
+      tags:
+      - Fund Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - token
+              properties:
+                token:
+                  type: string
+                  description: Credit card token to unregister
+      responses:
+        '200':
+          description: Credit card unregistered
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /transferFunds:
+    get:
+      operationId: listFundTransfers
+      summary: List fund transfers
+      description: Retrieve a list of fund transfers between accounts.
+      tags:
+      - Fund Management
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transfers:
+                    type: array
+                    items:
+                      type: object
+                      description: Fund transfer record
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    CreditCardDeposit:
+      type: object
+      description: Represents a credit card deposit transaction
+      properties:
+        depositId:
+          type: string
+          description: Unique deposit identifier
+        amount:
+          type: number
+          format: double
+          description: Deposit amount
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        status:
+          type: string
+          description: Deposit status
+        createdAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+    CreditCard:
+      type: object
+      description: Represents a registered credit card
+      properties:
+        token:
+          type: string
+          description: Tokenized credit card identifier
+        lastFour:
+          type: string
+          description: Last four digits of the card
+        expiration:
+          type: string
+          description: Card expiration date (MM/YYYY)
+        cardType:
+          type: string
+          description: Card network type (VISA, MC, etc.)
+  responses:
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using platform name and API key
+    oAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow for more secure integrations
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.tangocard.com/oauth/token
+          scopes: {}
+externalDocs:
+  description: Tango Developer Portal
+  url: https://developers.tangocard.com/docs/api-endpoint-overview

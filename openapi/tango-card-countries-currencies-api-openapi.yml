@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: Tango RaaS Accounts Countries & Currencies API
+  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
+
+    '
+  version: v2
+  contact:
+    name: Tango Card Developer Support
+    email: devsupport@tangocard.com
+    url: https://developers.tangocard.com/
+  license:
+    name: Proprietary
+    url: https://www.tangocard.com/terms-of-service/
+servers:
+- url: https://api.tangocard.com/raas/v2
+  description: Production
+- url: https://integration-api.tangocard.com/raas/v2
+  description: Sandbox / Integration
+security:
+- basicAuth: []
+tags:
+- name: Countries & Currencies
+  description: Supported reward countries
+paths:
+  /rewardCountries:
+    get:
+      operationId: listRewardCountries
+      summary: List reward countries
+      description: Retrieve a list of all countries where rewards are available.
+      tags:
+      - Countries & Currencies
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  countries:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RewardCountry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+    RewardCountry:
+      type: object
+      description: Represents a country where rewards are available
+      properties:
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+        countryName:
+          type: string
+          description: Full country name
+  responses:
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using platform name and API key
+    oAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow for more secure integrations
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.tangocard.com/oauth/token
+          scopes: {}
+externalDocs:
+  description: Tango Developer Portal
+  url: https://developers.tangocard.com/docs/api-endpoint-overview

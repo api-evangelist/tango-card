@@ -1,0 +1,180 @@
+openapi: 3.1.0
+info:
+  title: Tango RaaS Accounts Customers API
+  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
+
+    '
+  version: v2
+  contact:
+    name: Tango Card Developer Support
+    email: devsupport@tangocard.com
+    url: https://developers.tangocard.com/
+  license:
+    name: Proprietary
+    url: https://www.tangocard.com/terms-of-service/
+servers:
+- url: https://api.tangocard.com/raas/v2
+  description: Production
+- url: https://integration-api.tangocard.com/raas/v2
+  description: Sandbox / Integration
+security:
+- basicAuth: []
+tags:
+- name: Customers
+  description: Manage platform customers
+paths:
+  /customers:
+    get:
+      operationId: listCustomers
+      summary: List customers
+      description: Retrieve a list of all platform customers.
+      tags:
+      - Customers
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCustomer
+      summary: Create a customer
+      description: Create a new platform customer.
+      tags:
+      - Customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreate'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerIdentifier}:
+    get:
+      operationId: getCustomer
+      summary: Get a customer
+      description: Retrieve a single customer by identifier.
+      tags:
+      - Customers
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Customer:
+      type: object
+      description: Represents a platform customer
+      properties:
+        customerIdentifier:
+          type: string
+          description: Unique identifier for the customer
+        displayName:
+          type: string
+          description: Human-readable name for the customer
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the customer was created
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          description: Current status of the customer
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+    CustomerCreate:
+      type: object
+      required:
+      - customerIdentifier
+      - displayName
+      properties:
+        customerIdentifier:
+          type: string
+          description: Unique identifier for the customer
+        displayName:
+          type: string
+          description: Human-readable name for the customer
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using platform name and API key
+    oAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow for more secure integrations
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.tangocard.com/oauth/token
+          scopes: {}
+externalDocs:
+  description: Tango Developer Portal
+  url: https://developers.tangocard.com/docs/api-endpoint-overview

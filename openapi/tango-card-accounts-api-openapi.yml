@@ -1,0 +1,266 @@
+openapi: 3.1.0
+info:
+  title: Tango RaaS Accounts API
+  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
+
+    '
+  version: v2
+  contact:
+    name: Tango Card Developer Support
+    email: devsupport@tangocard.com
+    url: https://developers.tangocard.com/
+  license:
+    name: Proprietary
+    url: https://www.tangocard.com/terms-of-service/
+servers:
+- url: https://api.tangocard.com/raas/v2
+  description: Production
+- url: https://integration-api.tangocard.com/raas/v2
+  description: Sandbox / Integration
+security:
+- basicAuth: []
+tags:
+- name: Accounts
+  description: Manage customer accounts and balances
+paths:
+  /accounts:
+    get:
+      operationId: listAccounts
+      summary: List all accounts
+      description: Retrieve a list of all accounts across all customers.
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /accounts/{accountIdentifier}:
+    get:
+      operationId: getAccount
+      summary: Get an account
+      description: Retrieve a single account by identifier.
+      tags:
+      - Accounts
+      parameters:
+      - name: accountIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /customers/{customerIdentifier}/accounts:
+    get:
+      operationId: listCustomerAccounts
+      summary: List customer accounts
+      description: Retrieve all accounts for a specific customer.
+      tags:
+      - Accounts
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: createCustomerAccount
+      summary: Create a customer account
+      description: Create a new account for a customer.
+      tags:
+      - Accounts
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+      responses:
+        '201':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerIdentifier}/accounts/{accountIdentifier}:
+    patch:
+      operationId: updateCustomerAccount
+      summary: Update a customer account
+      description: Partially update an account for a customer.
+      tags:
+      - Accounts
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdate'
+      responses:
+        '200':
+          description: Account updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    AccountUpdate:
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: Updated human-readable name for the account
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+    AccountCreate:
+      type: object
+      required:
+      - accountIdentifier
+      - displayName
+      - currencyCode
+      properties:
+        accountIdentifier:
+          type: string
+          description: Unique identifier for the account
+        displayName:
+          type: string
+          description: Human-readable name for the account
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+    Account:
+      type: object
+      description: Represents a customer account with balance
+      properties:
+        accountIdentifier:
+          type: string
+          description: Unique identifier for the account
+        customerIdentifier:
+          type: string
+          description: Identifier of the parent customer
+        displayName:
+          type: string
+          description: Human-readable name for the account
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code for the account
+        currentBalance:
+          type: number
+          format: double
+          description: Current account balance
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the account was created
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using platform name and API key
+    oAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow for more secure integrations
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.tangocard.com/oauth/token
+          scopes: {}
+externalDocs:
+  description: Tango Developer Portal
+  url: https://developers.tangocard.com/docs/api-endpoint-overview

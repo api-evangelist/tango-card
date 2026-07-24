@@ -1,0 +1,411 @@
+openapi: 3.1.0
+info:
+  title: Tango RaaS Accounts Line Items API
+  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
+
+    '
+  version: v2
+  contact:
+    name: Tango Card Developer Support
+    email: devsupport@tangocard.com
+    url: https://developers.tangocard.com/
+  license:
+    name: Proprietary
+    url: https://www.tangocard.com/terms-of-service/
+servers:
+- url: https://api.tangocard.com/raas/v2
+  description: Production
+- url: https://integration-api.tangocard.com/raas/v2
+  description: Sandbox / Integration
+security:
+- basicAuth: []
+tags:
+- name: Line Items
+  description: Order line item management and actions
+paths:
+  /lineItems:
+    get:
+      operationId: listLineItems
+      summary: List line items
+      description: Retrieve a list of order line items.
+      tags:
+      - Line Items
+      parameters:
+      - name: accountIdentifier
+        in: query
+        schema:
+          type: string
+        description: Filter by account identifier
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Filter line items created after this date
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Filter line items created before this date
+      - name: elementsPerBlock
+        in: query
+        schema:
+          type: integer
+        description: Number of results per page
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: Page number for pagination
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lineItems:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LineItem'
+                  totalCount:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /lineItems/reasonCodes:
+    get:
+      operationId: listLineItemReasonCodes
+      summary: List reason codes
+      description: Retrieve all available reason codes for line item actions.
+      tags:
+      - Line Items
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reasonCodes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReasonCode'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /lineItems/{referenceLineItemId}:
+    get:
+      operationId: getLineItem
+      summary: Get a line item
+      description: Retrieve a specific line item by reference ID.
+      tags:
+      - Line Items
+      parameters:
+      - name: referenceLineItemId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /lineItems/{referenceLineItemID}:
+    patch:
+      operationId: updateLineItem
+      summary: Update a line item
+      description: Partially update a line item.
+      tags:
+      - Line Items
+      parameters:
+      - name: referenceLineItemID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LineItemUpdate'
+      responses:
+        '200':
+          description: Line item updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /lineitems/{referenceLineItemID}/cancel:
+    post:
+      operationId: cancelLineItem
+      summary: Cancel a line item
+      description: Cancel a specific order line item.
+      tags:
+      - Line Items
+      parameters:
+      - name: referenceLineItemID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reasonCode:
+                  type: string
+                  description: Reason code for the cancellation
+      responses:
+        '200':
+          description: Line item cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /lineitems/{referenceLineItemid}/freeze:
+    post:
+      operationId: freezeLineItem
+      summary: Freeze a line item
+      description: Freeze a specific order line item to prevent delivery.
+      tags:
+      - Line Items
+      parameters:
+      - name: referenceLineItemid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reasonCode:
+                  type: string
+                  description: Reason code for the freeze
+      responses:
+        '200':
+          description: Line item frozen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /lineitems/{referenceLineItemID}/unfreeze:
+    post:
+      operationId: unfreezeLineItem
+      summary: Unfreeze a line item
+      description: Unfreeze a previously frozen line item to resume delivery.
+      tags:
+      - Line Items
+      parameters:
+      - name: referenceLineItemID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Line item unfrozen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /lineItems/{referenceLineItemID}/reissue:
+    post:
+      operationId: reissueLineItem
+      summary: Reissue a line item
+      description: Reissue the reward for a specific line item.
+      tags:
+      - Line Items
+      parameters:
+      - name: referenceLineItemID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Line item reissued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /lineItems/{referenceLineItemId}/resends:
+    post:
+      operationId: resendLineItem
+      summary: Resend a line item
+      description: Resend the reward delivery for a specific line item.
+      tags:
+      - Line Items
+      parameters:
+      - name: referenceLineItemId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Override email address for resend
+      responses:
+        '200':
+          description: Line item resent
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    LineItem:
+      type: object
+      description: Represents a line item within an order
+      properties:
+        referenceLineItemId:
+          type: string
+          description: Unique reference identifier for the line item
+        referenceOrderID:
+          type: string
+          description: Parent order reference identifier
+        status:
+          type: string
+          enum:
+          - PENDING
+          - FULFILLED
+          - CANCELLED
+          - FROZEN
+          - FAILED
+          description: Current status of the line item
+        amount:
+          type: number
+          format: double
+          description: Line item amount
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        utid:
+          type: string
+          description: Universal Token ID of the reward item
+        createdAt:
+          type: string
+          format: date-time
+    ReasonCode:
+      type: object
+      description: Reason code for line item actions
+      properties:
+        reasonCode:
+          type: string
+          description: Reason code identifier
+        description:
+          type: string
+          description: Description of the reason code
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+    LineItemUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Updated status for the line item
+        notes:
+          type: string
+          description: Notes for the status change
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using platform name and API key
+    oAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow for more secure integrations
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.tangocard.com/oauth/token
+          scopes: {}
+externalDocs:
+  description: Tango Developer Portal
+  url: https://developers.tangocard.com/docs/api-endpoint-overview

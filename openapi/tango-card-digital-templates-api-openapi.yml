@@ -1,0 +1,228 @@
+openapi: 3.1.0
+info:
+  title: Tango RaaS Accounts Digital Templates API
+  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
+
+    '
+  version: v2
+  contact:
+    name: Tango Card Developer Support
+    email: devsupport@tangocard.com
+    url: https://developers.tangocard.com/
+  license:
+    name: Proprietary
+    url: https://www.tangocard.com/terms-of-service/
+servers:
+- url: https://api.tangocard.com/raas/v2
+  description: Production
+- url: https://integration-api.tangocard.com/raas/v2
+  description: Sandbox / Integration
+security:
+- basicAuth: []
+tags:
+- name: Digital Templates
+  description: Email and digital template management
+paths:
+  /digitalTemplates:
+    get:
+      operationId: listDigitalTemplates
+      summary: List digital templates
+      description: Retrieve all digital email templates for reward delivery.
+      tags:
+      - Digital Templates
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  templates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DigitalTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createDigitalTemplate
+      summary: Create a digital template
+      description: Create a new digital email template for reward delivery.
+      tags:
+      - Digital Templates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DigitalTemplateCreate'
+      responses:
+        '201':
+          description: Template created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DigitalTemplate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /digitalTemplates/{etid}:
+    get:
+      operationId: getDigitalTemplate
+      summary: Get a digital template
+      description: Retrieve a specific digital template by ETID.
+      tags:
+      - Digital Templates
+      parameters:
+      - name: etid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DigitalTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateDigitalTemplate
+      summary: Update a digital template
+      description: Update an existing digital template.
+      tags:
+      - Digital Templates
+      parameters:
+      - name: etid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DigitalTemplateCreate'
+      responses:
+        '200':
+          description: Template updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DigitalTemplate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDigitalTemplate
+      summary: Delete a digital template
+      description: Delete a specific digital template.
+      tags:
+      - Digital Templates
+      parameters:
+      - name: etid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Template deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+    DigitalTemplate:
+      type: object
+      description: Represents a digital email template
+      properties:
+        etid:
+          type: string
+          description: Email template identifier
+        name:
+          type: string
+          description: Template name
+        status:
+          type: string
+          description: Template status (ACTIVE, INACTIVE)
+        createdAt:
+          type: string
+          format: date-time
+    DigitalTemplateCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Template name
+        subject:
+          type: string
+          description: Email subject line
+        htmlContent:
+          type: string
+          description: HTML content of the template
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using platform name and API key
+    oAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow for more secure integrations
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.tangocard.com/oauth/token
+          scopes: {}
+externalDocs:
+  description: Tango Developer Portal
+  url: https://developers.tangocard.com/docs/api-endpoint-overview

@@ -1,0 +1,282 @@
+openapi: 3.1.0
+info:
+  title: Tango RaaS Accounts Low Balance Alerts API
+  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
+
+    '
+  version: v2
+  contact:
+    name: Tango Card Developer Support
+    email: devsupport@tangocard.com
+    url: https://developers.tangocard.com/
+  license:
+    name: Proprietary
+    url: https://www.tangocard.com/terms-of-service/
+servers:
+- url: https://api.tangocard.com/raas/v2
+  description: Production
+- url: https://integration-api.tangocard.com/raas/v2
+  description: Sandbox / Integration
+security:
+- basicAuth: []
+tags:
+- name: Low Balance Alerts
+  description: Account low balance alert configuration
+paths:
+  /customers/{customerIdentifier}/accounts/{accountIdentifier}/lowbalance:
+    post:
+      operationId: createLowBalanceAlert
+      summary: Create a low balance alert
+      description: Create a low balance alert for an account.
+      tags:
+      - Low Balance Alerts
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LowBalanceAlertCreate'
+      responses:
+        '201':
+          description: Alert created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LowBalanceAlert'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: listLowBalanceAlerts
+      summary: List low balance alerts
+      description: List all low balance alerts for an account.
+      tags:
+      - Low Balance Alerts
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alerts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LowBalanceAlert'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customerIdentifier}/accounts/{accountIdentifier}/lowbalance/{balanceAlertID}:
+    get:
+      operationId: getLowBalanceAlert
+      summary: Get a low balance alert
+      description: Retrieve a specific low balance alert.
+      tags:
+      - Low Balance Alerts
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: balanceAlertID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LowBalanceAlert'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateLowBalanceAlert
+      summary: Update a low balance alert
+      description: Update an existing low balance alert.
+      tags:
+      - Low Balance Alerts
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: balanceAlertID
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LowBalanceAlertCreate'
+      responses:
+        '200':
+          description: Alert updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LowBalanceAlert'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteLowBalanceAlert
+      summary: Delete a low balance alert
+      description: Delete a specific low balance alert.
+      tags:
+      - Low Balance Alerts
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: balanceAlertID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Alert deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    LowBalanceAlert:
+      type: object
+      description: Low balance alert configuration for an account
+      properties:
+        balanceAlertID:
+          type: string
+          description: Unique identifier for the alert
+        accountIdentifier:
+          type: string
+          description: Account associated with the alert
+        threshold:
+          type: number
+          format: double
+          description: Balance threshold that triggers the alert
+        email:
+          type: string
+          format: email
+          description: Email to notify when threshold is reached
+    LowBalanceAlertCreate:
+      type: object
+      required:
+      - threshold
+      - email
+      properties:
+        threshold:
+          type: number
+          format: double
+          description: Balance threshold that triggers the alert
+        email:
+          type: string
+          format: email
+          description: Email to notify when threshold is reached
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using platform name and API key
+    oAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow for more secure integrations
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.tangocard.com/oauth/token
+          scopes: {}
+externalDocs:
+  description: Tango Developer Portal
+  url: https://developers.tangocard.com/docs/api-endpoint-overview
