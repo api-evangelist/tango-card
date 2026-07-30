@@ -1,7 +1,20 @@
 aid: tango-card
 name: Tango Card
 description: Tango Card is a digital rewards and gift card distribution platform providing a REST API (Rewards as a Service, RaaS) for sending gift cards, managing reward orders, tracking delivery, and accessing a global catalog of 3,100+ reward options including e-gift cards, prepaid cards, and charitable donations.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/tango-card.png
 url: https://raw.githubusercontent.com/api-evangelist/tango-card/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -14,34 +27,266 @@ tags:
   - Prepaid Cards
   - Payments
 apis:
-  - aid: tango-card:tango-raas-api
-    name: Tango RaaS API
-    description: The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://developers.tangocard.com/
-    baseURL: https://api.tangocard.com/raas/v2
-    tags:
-      - Gift Cards
-      - Rewards
-      - Incentives
-      - Orders
-      - Catalog
-    properties:
-      - type: Documentation
-        url: https://developers.tangocard.com/docs/api-endpoint-overview
-      - type: OpenAPI
-        url: https://developers.tangocard.com/llms.txt
-      - type: Sandbox
-        url: https://integration-api.tangocard.com/raas/v2
-      - type: Authentication
-        url: https://developers.tangocard.com/docs/get-started
-      - type: Webhooks
-        url: https://developers.tangocard.com/docs/webhooks
-      - type: BestPractices
-        url: https://developers.tangocard.com/docs/best-practices
-    contact:
-      - FN: Tango Card Developer Support
-        email: devsupport@tangocard.com
+- aid: tango-card:tango-card-accounts-api
+  name: Tango Card Accounts API
+  description: Manage customer accounts and balances
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-brand-categories-api
+  name: Tango Card Brand Categories API
+  description: Reward brand category information
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Brand Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-brand-categories-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-catalog-api
+  name: Tango Card Catalog API
+  description: Reward catalog access
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-catalog-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-choice-products-api
+  name: Tango Card Choice Products API
+  description: Choice product management
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Choice Products
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-choice-products-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-countries-currencies-api
+  name: Tango Card Countries & Currencies API
+  description: Supported reward countries
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Countries & Currencies
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-countries-currencies-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-credential-types-api
+  name: Tango Card Credential Types API
+  description: Credential type definitions
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Credential Types
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-credential-types-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-customers-api
+  name: Tango Card Customers API
+  description: Manage platform customers
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-customers-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-digital-templates-api
+  name: Tango Card Digital Templates API
+  description: Email and digital template management
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Digital Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-digital-templates-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-exchange-rates-api
+  name: Tango Card Exchange Rates API
+  description: Currency exchange rates
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Exchange Rates
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-exchange-rates-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-fund-management-api
+  name: Tango Card Fund Management API
+  description: Credit card deposits, registrations, and fund transfers
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Fund Management
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-fund-management-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-line-items-api
+  name: Tango Card Line Items API
+  description: Order line item management and actions
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Line Items
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-line-items-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-low-balance-alerts-api
+  name: Tango Card Low Balance Alerts API
+  description: Account low balance alert configuration
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Low Balance Alerts
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-low-balance-alerts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
+- aid: tango-card:tango-card-orders-api
+  name: Tango Card Orders API
+  description: Reward order creation and management
+  humanURL: https://developers.tangocard.com/
+  baseURL: https://api.tangocard.com/raas/v2
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/tango-card-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tangocard.com/docs/api-endpoint-overview
+  - type: Sandbox
+    url: https://integration-api.tangocard.com/raas/v2
+  - type: Authentication
+    url: https://developers.tangocard.com/docs/get-started
+  - type: Webhooks
+    url: https://developers.tangocard.com/docs/webhooks
+  - type: BestPractices
+    url: https://developers.tangocard.com/docs/best-practices
 common:
   - type: AgenticAccess
     url: agentic-access/tango-card-agentic-access.yml
