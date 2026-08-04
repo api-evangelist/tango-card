@@ -1,0 +1,38 @@
+{
+  "provider": "tango-card",
+  "sources": [
+    "tango-card-accounts-api-openapi.yml",
+    "tango-card-brand-categories-api-openapi.yml",
+    "tango-card-catalog-api-openapi.yml",
+    "tango-card-choice-products-api-openapi.yml",
+    "tango-card-countries-currencies-api-openapi.yml",
+    "tango-card-credential-types-api-openapi.yml",
+    "tango-card-customers-api-openapi.yml",
+    "tango-card-digital-templates-api-openapi.yml",
+    "tango-card-exchange-rates-api-openapi.yml",
+    "tango-card-fund-management-api-openapi.yml",
+    "tango-card-line-items-api-openapi.yml",
+    "tango-card-low-balance-alerts-api-openapi.yml",
+    "tango-card-orders-api-openapi.yml"
+  ],
+  "outputs": [
+    "tango-card-accounts-api-openapi.yml",
+    "tango-card-brand-categories-api-openapi.yml",
+    "tango-card-catalog-api-openapi.yml",
+    "tango-card-choice-products-api-openapi.yml",
+    "tango-card-countries-currencies-api-openapi.yml",
+    "tango-card-credential-types-api-openapi.yml",
+    "tango-card-customers-api-openapi.yml",
+    "tango-card-digital-templates-api-openapi.yml",
+    "tango-card-exchange-rates-api-openapi.yml",
+    "tango-card-fund-management-api-openapi.yml",
+    "tango-card-line-items-api-openapi.yml",
+    "tango-card-low-balance-alerts-api-openapi.yml",
+    "tango-card-orders-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

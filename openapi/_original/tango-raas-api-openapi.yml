@@ -1,0 +1,1779 @@
+openapi: 3.1.0
+info:
+  title: Tango RaaS API
+  description: >
+    The Tango Rewards as a Service (RaaS) REST API enables businesses to
+    programmatically send gift cards, manage reward orders, fund accounts,
+    access the global reward catalog, configure webhooks, and track delivery
+    status for digital rewards and incentive programs.
+  version: v2
+  contact:
+    name: Tango Card Developer Support
+    email: devsupport@tangocard.com
+    url: https://developers.tangocard.com/
+  license:
+    name: Proprietary
+    url: https://www.tangocard.com/terms-of-service/
+servers:
+  - url: https://api.tangocard.com/raas/v2
+    description: Production
+  - url: https://integration-api.tangocard.com/raas/v2
+    description: Sandbox / Integration
+externalDocs:
+  description: Tango Developer Portal
+  url: https://developers.tangocard.com/docs/api-endpoint-overview
+tags:
+  - name: Customers
+    description: Manage platform customers
+  - name: Accounts
+    description: Manage customer accounts and balances
+  - name: Fund Management
+    description: Credit card deposits, registrations, and fund transfers
+  - name: Exchange Rates
+    description: Currency exchange rates
+  - name: Catalog
+    description: Reward catalog access
+  - name: Choice Products
+    description: Choice product management
+  - name: Brand Categories
+    description: Reward brand category information
+  - name: Countries & Currencies
+    description: Supported reward countries
+  - name: Digital Templates
+    description: Email and digital template management
+  - name: Orders
+    description: Reward order creation and management
+  - name: Line Items
+    description: Order line item management and actions
+  - name: Credential Types
+    description: Credential type definitions
+  - name: Low Balance Alerts
+    description: Account low balance alert configuration
+  - name: Webhooks
+    description: Webhook subscription management
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using platform name and API key
+    oAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials flow for more secure integrations
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.tangocard.com/oauth/token
+          scopes: {}
+
+  schemas:
+    Customer:
+      type: object
+      description: Represents a platform customer
+      properties:
+        customerIdentifier:
+          type: string
+          description: Unique identifier for the customer
+        displayName:
+          type: string
+          description: Human-readable name for the customer
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the customer was created
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+          description: Current status of the customer
+
+    CustomerCreate:
+      type: object
+      required:
+        - customerIdentifier
+        - displayName
+      properties:
+        customerIdentifier:
+          type: string
+          description: Unique identifier for the customer
+        displayName:
+          type: string
+          description: Human-readable name for the customer
+
+    Account:
+      type: object
+      description: Represents a customer account with balance
+      properties:
+        accountIdentifier:
+          type: string
+          description: Unique identifier for the account
+        customerIdentifier:
+          type: string
+          description: Identifier of the parent customer
+        displayName:
+          type: string
+          description: Human-readable name for the account
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code for the account
+        currentBalance:
+          type: number
+          format: double
+          description: Current account balance
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the account was created
+
+    AccountCreate:
+      type: object
+      required:
+        - accountIdentifier
+        - displayName
+        - currencyCode
+      properties:
+        accountIdentifier:
+          type: string
+          description: Unique identifier for the account
+        displayName:
+          type: string
+          description: Human-readable name for the account
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+
+    AccountUpdate:
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: Updated human-readable name for the account
+
+    Order:
+      type: object
+      description: Represents a reward order
+      properties:
+        referenceOrderID:
+          type: string
+          description: Unique reference identifier for the order
+        orderStatus:
+          type: string
+          enum: [PENDING, FULFILLED, FAILED, CANCELLED]
+          description: Current status of the order
+        customerIdentifier:
+          type: string
+          description: Customer who placed the order
+        accountIdentifier:
+          type: string
+          description: Account charged for the order
+        amount:
+          type: number
+          format: double
+          description: Total order amount
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        utid:
+          type: string
+          description: Universal Token ID for the reward item
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the order was created
+        lineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+
+    OrderCreate:
+      type: object
+      required:
+        - customerIdentifier
+        - accountIdentifier
+        - amount
+        - utid
+      properties:
+        customerIdentifier:
+          type: string
+          description: Customer placing the order
+        accountIdentifier:
+          type: string
+          description: Account to charge for the order
+        amount:
+          type: number
+          format: double
+          description: Reward amount
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code (default USD)
+        utid:
+          type: string
+          description: Universal Token ID of the reward item
+        recipientInfo:
+          $ref: '#/components/schemas/RecipientInfo'
+        sendEmail:
+          type: boolean
+          description: Whether to send the reward via email
+        notes:
+          type: string
+          description: Internal notes for the order
+        externalRefID:
+          type: string
+          description: External reference identifier
+
+    RecipientInfo:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Recipient first name
+        lastName:
+          type: string
+          description: Recipient last name
+        email:
+          type: string
+          format: email
+          description: Recipient email address
+
+    LineItem:
+      type: object
+      description: Represents a line item within an order
+      properties:
+        referenceLineItemId:
+          type: string
+          description: Unique reference identifier for the line item
+        referenceOrderID:
+          type: string
+          description: Parent order reference identifier
+        status:
+          type: string
+          enum: [PENDING, FULFILLED, CANCELLED, FROZEN, FAILED]
+          description: Current status of the line item
+        amount:
+          type: number
+          format: double
+          description: Line item amount
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        utid:
+          type: string
+          description: Universal Token ID of the reward item
+        createdAt:
+          type: string
+          format: date-time
+
+    LineItemUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Updated status for the line item
+        notes:
+          type: string
+          description: Notes for the status change
+
+    CatalogItem:
+      type: object
+      description: Represents a reward item in the catalog
+      properties:
+        utid:
+          type: string
+          description: Universal Token ID for this reward item
+        rewardName:
+          type: string
+          description: Name of the reward
+        brandName:
+          type: string
+          description: Brand offering the reward
+        brandKey:
+          type: string
+          description: Unique brand identifier
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        minValue:
+          type: number
+          format: double
+          description: Minimum denomination value
+        maxValue:
+          type: number
+          format: double
+          description: Maximum denomination value
+        fixedValue:
+          type: number
+          format: double
+          description: Fixed denomination value (if applicable)
+        countries:
+          type: array
+          items:
+            type: string
+          description: Countries where reward is available
+
+    CreditCard:
+      type: object
+      description: Represents a registered credit card
+      properties:
+        token:
+          type: string
+          description: Tokenized credit card identifier
+        lastFour:
+          type: string
+          description: Last four digits of the card
+        expiration:
+          type: string
+          description: Card expiration date (MM/YYYY)
+        cardType:
+          type: string
+          description: Card network type (VISA, MC, etc.)
+
+    CreditCardDeposit:
+      type: object
+      description: Represents a credit card deposit transaction
+      properties:
+        depositId:
+          type: string
+          description: Unique deposit identifier
+        amount:
+          type: number
+          format: double
+          description: Deposit amount
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        status:
+          type: string
+          description: Deposit status
+        createdAt:
+          type: string
+          format: date-time
+
+    ExchangeRate:
+      type: object
+      description: Currency exchange rate information
+      properties:
+        fromCurrencyCode:
+          type: string
+          description: Source currency ISO 4217 code
+        toCurrencyCode:
+          type: string
+          description: Target currency ISO 4217 code
+        rate:
+          type: number
+          format: double
+          description: Exchange rate
+
+    ChoiceProduct:
+      type: object
+      description: Represents a choice product (multi-brand gift card)
+      properties:
+        utid:
+          type: string
+          description: Universal Token ID for the choice product
+        displayName:
+          type: string
+          description: Human-readable name
+        minValue:
+          type: number
+          format: double
+          description: Minimum value
+        maxValue:
+          type: number
+          format: double
+          description: Maximum value
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+
+    BrandCategory:
+      type: object
+      description: Represents a reward brand category
+      properties:
+        id:
+          type: integer
+          description: Category identifier
+        name:
+          type: string
+          description: Category name
+
+    RewardCountry:
+      type: object
+      description: Represents a country where rewards are available
+      properties:
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+        countryName:
+          type: string
+          description: Full country name
+
+    DigitalTemplate:
+      type: object
+      description: Represents a digital email template
+      properties:
+        etid:
+          type: string
+          description: Email template identifier
+        name:
+          type: string
+          description: Template name
+        status:
+          type: string
+          description: Template status (ACTIVE, INACTIVE)
+        createdAt:
+          type: string
+          format: date-time
+
+    DigitalTemplateCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Template name
+        subject:
+          type: string
+          description: Email subject line
+        htmlContent:
+          type: string
+          description: HTML content of the template
+
+    LowBalanceAlert:
+      type: object
+      description: Low balance alert configuration for an account
+      properties:
+        balanceAlertID:
+          type: string
+          description: Unique identifier for the alert
+        accountIdentifier:
+          type: string
+          description: Account associated with the alert
+        threshold:
+          type: number
+          format: double
+          description: Balance threshold that triggers the alert
+        email:
+          type: string
+          format: email
+          description: Email to notify when threshold is reached
+
+    LowBalanceAlertCreate:
+      type: object
+      required:
+        - threshold
+        - email
+      properties:
+        threshold:
+          type: number
+          format: double
+          description: Balance threshold that triggers the alert
+        email:
+          type: string
+          format: email
+          description: Email to notify when threshold is reached
+
+    CredentialType:
+      type: object
+      description: Represents a credential type for reward delivery
+      properties:
+        credentialType:
+          type: string
+          description: Credential type identifier
+        description:
+          type: string
+          description: Human-readable description
+
+    ReasonCode:
+      type: object
+      description: Reason code for line item actions
+      properties:
+        reasonCode:
+          type: string
+          description: Reason code identifier
+        description:
+          type: string
+          description: Description of the reason code
+
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+security:
+  - basicAuth: []
+
+paths:
+
+  # ── Customers ───────────────────────────────────────────────────────────────
+
+  /customers:
+    get:
+      operationId: listCustomers
+      summary: List customers
+      description: Retrieve a list of all platform customers.
+      tags: [Customers]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    post:
+      operationId: createCustomer
+      summary: Create a customer
+      description: Create a new platform customer.
+      tags: [Customers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreate'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /customers/{customerIdentifier}:
+    get:
+      operationId: getCustomer
+      summary: Get a customer
+      description: Retrieve a single customer by identifier.
+      tags: [Customers]
+      parameters:
+        - name: customerIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  # ── Accounts ────────────────────────────────────────────────────────────────
+
+  /accounts:
+    get:
+      operationId: listAccounts
+      summary: List all accounts
+      description: Retrieve a list of all accounts across all customers.
+      tags: [Accounts]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /accounts/{accountIdentifier}:
+    get:
+      operationId: getAccount
+      summary: Get an account
+      description: Retrieve a single account by identifier.
+      tags: [Accounts]
+      parameters:
+        - name: accountIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /customers/{customerIdentifier}/accounts:
+    get:
+      operationId: listCustomerAccounts
+      summary: List customer accounts
+      description: Retrieve all accounts for a specific customer.
+      tags: [Accounts]
+      parameters:
+        - name: customerIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    post:
+      operationId: createCustomerAccount
+      summary: Create a customer account
+      description: Create a new account for a customer.
+      tags: [Accounts]
+      parameters:
+        - name: customerIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+      responses:
+        '201':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /customers/{customerIdentifier}/accounts/{accountIdentifier}:
+    patch:
+      operationId: updateCustomerAccount
+      summary: Update a customer account
+      description: Partially update an account for a customer.
+      tags: [Accounts]
+      parameters:
+        - name: customerIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdate'
+      responses:
+        '200':
+          description: Account updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  # ── Low Balance Alerts ───────────────────────────────────────────────────────
+
+  /customers/{customerIdentifier}/accounts/{accountIdentifier}/lowbalance:
+    post:
+      operationId: createLowBalanceAlert
+      summary: Create a low balance alert
+      description: Create a low balance alert for an account.
+      tags: [Low Balance Alerts]
+      parameters:
+        - name: customerIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LowBalanceAlertCreate'
+      responses:
+        '201':
+          description: Alert created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LowBalanceAlert'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    get:
+      operationId: listLowBalanceAlerts
+      summary: List low balance alerts
+      description: List all low balance alerts for an account.
+      tags: [Low Balance Alerts]
+      parameters:
+        - name: customerIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alerts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LowBalanceAlert'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /customers/{customerIdentifier}/accounts/{accountIdentifier}/lowbalance/{balanceAlertID}:
+    get:
+      operationId: getLowBalanceAlert
+      summary: Get a low balance alert
+      description: Retrieve a specific low balance alert.
+      tags: [Low Balance Alerts]
+      parameters:
+        - name: customerIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: balanceAlertID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LowBalanceAlert'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    patch:
+      operationId: updateLowBalanceAlert
+      summary: Update a low balance alert
+      description: Update an existing low balance alert.
+      tags: [Low Balance Alerts]
+      parameters:
+        - name: customerIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: balanceAlertID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LowBalanceAlertCreate'
+      responses:
+        '200':
+          description: Alert updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LowBalanceAlert'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    delete:
+      operationId: deleteLowBalanceAlert
+      summary: Delete a low balance alert
+      description: Delete a specific low balance alert.
+      tags: [Low Balance Alerts]
+      parameters:
+        - name: customerIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: balanceAlertID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Alert deleted
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  # ── Fund Management ──────────────────────────────────────────────────────────
+
+  /creditCards:
+    get:
+      operationId: listCreditCards
+      summary: List credit cards
+      description: Retrieve all registered credit cards for the platform.
+      tags: [Fund Management]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  creditCards:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CreditCard'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    post:
+      operationId: registerCreditCard
+      summary: Register a credit card
+      description: Register a new credit card for deposits.
+      tags: [Fund Management]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Credit card number
+                expiration:
+                  type: string
+                  description: Card expiration in MM/YYYY format
+                billingContactInfo:
+                  type: object
+                  description: Billing contact information
+      responses:
+        '201':
+          description: Credit card registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCard'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /creditCards/{token}:
+    get:
+      operationId: getCreditCard
+      summary: Get a credit card
+      description: Retrieve a registered credit card by token.
+      tags: [Fund Management]
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCard'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /creditCardDeposits:
+    post:
+      operationId: createCreditCardDeposit
+      summary: Create a credit card deposit
+      description: Deposit funds into an account using a registered credit card.
+      tags: [Fund Management]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - customerIdentifier
+                - accountIdentifier
+                - amount
+                - creditCardToken
+              properties:
+                customerIdentifier:
+                  type: string
+                  description: Customer identifier
+                accountIdentifier:
+                  type: string
+                  description: Account to fund
+                amount:
+                  type: number
+                  format: double
+                  description: Deposit amount
+                currencyCode:
+                  type: string
+                  description: ISO 4217 currency code
+                creditCardToken:
+                  type: string
+                  description: Registered credit card token
+      responses:
+        '201':
+          description: Deposit created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardDeposit'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /creditCardDeposits/{depositId}:
+    get:
+      operationId: getCreditCardDeposit
+      summary: Get a credit card deposit
+      description: Retrieve a specific credit card deposit by ID.
+      tags: [Fund Management]
+      parameters:
+        - name: depositId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCardDeposit'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /creditCardUnregisters:
+    post:
+      operationId: unregisterCreditCard
+      summary: Unregister a credit card
+      description: Remove a previously registered credit card from the platform.
+      tags: [Fund Management]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - token
+              properties:
+                token:
+                  type: string
+                  description: Credit card token to unregister
+      responses:
+        '200':
+          description: Credit card unregistered
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /transferFunds:
+    get:
+      operationId: listFundTransfers
+      summary: List fund transfers
+      description: Retrieve a list of fund transfers between accounts.
+      tags: [Fund Management]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transfers:
+                    type: array
+                    items:
+                      type: object
+                      description: Fund transfer record
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  # ── Exchange Rates ───────────────────────────────────────────────────────────
+
+  /exchangerates:
+    get:
+      operationId: listExchangeRates
+      summary: List exchange rates
+      description: Retrieve current currency exchange rates supported by the platform.
+      tags: [Exchange Rates]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exchangeRates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ExchangeRate'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  # ── Catalog ──────────────────────────────────────────────────────────────────
+
+  /catalogs:
+    get:
+      operationId: getCatalog
+      summary: Get reward catalog
+      description: Retrieve the full reward catalog including all available gift cards and prepaid products.
+      tags: [Catalog]
+      parameters:
+        - name: verbose
+          in: query
+          schema:
+            type: boolean
+          description: Return full catalog details
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brands:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        brandKey:
+                          type: string
+                        brandName:
+                          type: string
+                        items:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/CatalogItem'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  # ── Choice Products ──────────────────────────────────────────────────────────
+
+  /choiceProducts:
+    get:
+      operationId: listChoiceProducts
+      summary: List choice products
+      description: Retrieve all available choice products (multi-brand gift cards).
+      tags: [Choice Products]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  choiceProducts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChoiceProduct'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /choiceProducts/{utid}:
+    get:
+      operationId: getChoiceProduct
+      summary: Get a choice product
+      description: Retrieve a specific choice product by UTID.
+      tags: [Choice Products]
+      parameters:
+        - name: utid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChoiceProduct'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /choiceProducts/{choiceProductUtid}/catalog:
+    get:
+      operationId: getChoiceProductCatalog
+      summary: Get choice product catalog
+      description: Retrieve the catalog of items available within a specific choice product.
+      tags: [Choice Products]
+      parameters:
+        - name: choiceProductUtid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CatalogItem'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  # ── Brand Categories ─────────────────────────────────────────────────────────
+
+  /brandCategories:
+    get:
+      operationId: listBrandCategories
+      summary: List brand categories
+      description: Retrieve all available reward brand categories.
+      tags: [Brand Categories]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brandCategories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BrandCategory'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  # ── Countries & Currencies ───────────────────────────────────────────────────
+
+  /rewardCountries:
+    get:
+      operationId: listRewardCountries
+      summary: List reward countries
+      description: Retrieve a list of all countries where rewards are available.
+      tags: [Countries & Currencies]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  countries:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RewardCountry'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  # ── Digital Templates ────────────────────────────────────────────────────────
+
+  /digitalTemplates:
+    get:
+      operationId: listDigitalTemplates
+      summary: List digital templates
+      description: Retrieve all digital email templates for reward delivery.
+      tags: [Digital Templates]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  templates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DigitalTemplate'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    post:
+      operationId: createDigitalTemplate
+      summary: Create a digital template
+      description: Create a new digital email template for reward delivery.
+      tags: [Digital Templates]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DigitalTemplateCreate'
+      responses:
+        '201':
+          description: Template created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DigitalTemplate'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /digitalTemplates/{etid}:
+    get:
+      operationId: getDigitalTemplate
+      summary: Get a digital template
+      description: Retrieve a specific digital template by ETID.
+      tags: [Digital Templates]
+      parameters:
+        - name: etid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DigitalTemplate'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    patch:
+      operationId: updateDigitalTemplate
+      summary: Update a digital template
+      description: Update an existing digital template.
+      tags: [Digital Templates]
+      parameters:
+        - name: etid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DigitalTemplateCreate'
+      responses:
+        '200':
+          description: Template updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DigitalTemplate'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+    delete:
+      operationId: deleteDigitalTemplate
+      summary: Delete a digital template
+      description: Delete a specific digital template.
+      tags: [Digital Templates]
+      parameters:
+        - name: etid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Template deleted
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  # ── Orders ───────────────────────────────────────────────────────────────────
+
+  /orders:
+    get:
+      operationId: listOrders
+      summary: List orders
+      description: Retrieve a list of reward orders.
+      tags: [Orders]
+      parameters:
+        - name: accountIdentifier
+          in: query
+          schema:
+            type: string
+          description: Filter by account identifier
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Filter orders created after this date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Filter orders created before this date
+        - name: elementsPerBlock
+          in: query
+          schema:
+            type: integer
+          description: Number of results per page
+        - name: page
+          in: query
+          schema:
+            type: integer
+          description: Page number for pagination
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  totalCount:
+                    type: integer
+        '401': {$ref: '#/components/responses/Unauthorized'}
+    post:
+      operationId: createOrder
+      summary: Create an order
+      description: Place a new reward order to send a gift card or incentive.
+      tags: [Orders]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderCreate'
+      responses:
+        '201':
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '429': {$ref: '#/components/responses/TooManyRequests'}
+
+  /orders/{referenceOrderID}:
+    get:
+      operationId: getOrder
+      summary: Get an order
+      description: Retrieve a specific order by reference order ID.
+      tags: [Orders]
+      parameters:
+        - name: referenceOrderID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /orders/{referenceOrderID}/resends:
+    post:
+      operationId: resendOrder
+      summary: Resend an order
+      description: Resend the reward delivery for a specific order.
+      tags: [Orders]
+      parameters:
+        - name: referenceOrderID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Override email address for resend
+      responses:
+        '200':
+          description: Order resent
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  # ── Line Items ───────────────────────────────────────────────────────────────
+
+  /lineItems:
+    get:
+      operationId: listLineItems
+      summary: List line items
+      description: Retrieve a list of order line items.
+      tags: [Line Items]
+      parameters:
+        - name: accountIdentifier
+          in: query
+          schema:
+            type: string
+          description: Filter by account identifier
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Filter line items created after this date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Filter line items created before this date
+        - name: elementsPerBlock
+          in: query
+          schema:
+            type: integer
+          description: Number of results per page
+        - name: page
+          in: query
+          schema:
+            type: integer
+          description: Page number for pagination
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lineItems:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LineItem'
+                  totalCount:
+                    type: integer
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /lineItems/reasonCodes:
+    get:
+      operationId: listLineItemReasonCodes
+      summary: List reason codes
+      description: Retrieve all available reason codes for line item actions.
+      tags: [Line Items]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reasonCodes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReasonCode'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+
+  /lineItems/{referenceLineItemId}:
+    get:
+      operationId: getLineItem
+      summary: Get a line item
+      description: Retrieve a specific line item by reference ID.
+      tags: [Line Items]
+      parameters:
+        - name: referenceLineItemId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /lineItems/{referenceLineItemID}:
+    patch:
+      operationId: updateLineItem
+      summary: Update a line item
+      description: Partially update a line item.
+      tags: [Line Items]
+      parameters:
+        - name: referenceLineItemID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LineItemUpdate'
+      responses:
+        '200':
+          description: Line item updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /lineitems/{referenceLineItemID}/cancel:
+    post:
+      operationId: cancelLineItem
+      summary: Cancel a line item
+      description: Cancel a specific order line item.
+      tags: [Line Items]
+      parameters:
+        - name: referenceLineItemID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reasonCode:
+                  type: string
+                  description: Reason code for the cancellation
+      responses:
+        '200':
+          description: Line item cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /lineitems/{referenceLineItemid}/freeze:
+    post:
+      operationId: freezeLineItem
+      summary: Freeze a line item
+      description: Freeze a specific order line item to prevent delivery.
+      tags: [Line Items]
+      parameters:
+        - name: referenceLineItemid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reasonCode:
+                  type: string
+                  description: Reason code for the freeze
+      responses:
+        '200':
+          description: Line item frozen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /lineitems/{referenceLineItemID}/unfreeze:
+    post:
+      operationId: unfreezeLineItem
+      summary: Unfreeze a line item
+      description: Unfreeze a previously frozen line item to resume delivery.
+      tags: [Line Items]
+      parameters:
+        - name: referenceLineItemID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Line item unfrozen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /lineItems/{referenceLineItemID}/reissue:
+    post:
+      operationId: reissueLineItem
+      summary: Reissue a line item
+      description: Reissue the reward for a specific line item.
+      tags: [Line Items]
+      parameters:
+        - name: referenceLineItemID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Line item reissued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineItem'
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  /lineItems/{referenceLineItemId}/resends:
+    post:
+      operationId: resendLineItem
+      summary: Resend a line item
+      description: Resend the reward delivery for a specific line item.
+      tags: [Line Items]
+      parameters:
+        - name: referenceLineItemId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Override email address for resend
+      responses:
+        '200':
+          description: Line item resent
+        '400': {$ref: '#/components/responses/BadRequest'}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+        '404': {$ref: '#/components/responses/NotFound'}
+
+  # ── Credential Types ─────────────────────────────────────────────────────────
+
+  /credentialtypes:
+    get:
+      operationId: listCredentialTypes
+      summary: List credential types
+      description: Retrieve all available credential types for reward delivery.
+      tags: [Credential Types]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  credentialTypes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CredentialType'
+        '401': {$ref: '#/components/responses/Unauthorized'}
