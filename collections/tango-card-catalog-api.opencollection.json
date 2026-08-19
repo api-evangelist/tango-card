@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tango RaaS Accounts Catalog API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get reward catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/catalogs",
+            "params": [
+              {
+                "name": "verbose",
+                "value": "",
+                "type": "query",
+                "description": "Return full catalog details"
+              }
+            ]
+          },
+          "docs": "Retrieve the full reward catalog including all available gift cards and prepaid products."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

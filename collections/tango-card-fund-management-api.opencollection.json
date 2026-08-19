@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tango RaaS Accounts Fund Management API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fund Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List credit cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/creditCards"
+          },
+          "docs": "Retrieve all registered credit cards for the platform."
+        },
+        {
+          "info": {
+            "name": "Register a credit card",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tangocard.com/raas/v2/creditCards",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new credit card for deposits."
+        },
+        {
+          "info": {
+            "name": "Get a credit card",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/creditCards/:token",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a registered credit card by token."
+        },
+        {
+          "info": {
+            "name": "Create a credit card deposit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tangocard.com/raas/v2/creditCardDeposits",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deposit funds into an account using a registered credit card."
+        },
+        {
+          "info": {
+            "name": "Get a credit card deposit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/creditCardDeposits/:depositId",
+            "params": [
+              {
+                "name": "depositId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific credit card deposit by ID."
+        },
+        {
+          "info": {
+            "name": "Unregister a credit card",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tangocard.com/raas/v2/creditCardUnregisters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove a previously registered credit card from the platform."
+        },
+        {
+          "info": {
+            "name": "List fund transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/transferFunds"
+          },
+          "docs": "Retrieve a list of fund transfers between accounts."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

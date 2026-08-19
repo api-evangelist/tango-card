@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tango RaaS Accounts Low Balance Alerts API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Low Balance Alerts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List low balance alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/customers/:customerIdentifier/accounts/:accountIdentifier/lowbalance",
+            "params": [
+              {
+                "name": "customerIdentifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountIdentifier",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all low balance alerts for an account."
+        },
+        {
+          "info": {
+            "name": "Create a low balance alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tangocard.com/raas/v2/customers/:customerIdentifier/accounts/:accountIdentifier/lowbalance",
+            "params": [
+              {
+                "name": "customerIdentifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountIdentifier",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a low balance alert for an account."
+        },
+        {
+          "info": {
+            "name": "Get a low balance alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/customers/:customerIdentifier/accounts/:accountIdentifier/lowbalance/:balanceAlertID",
+            "params": [
+              {
+                "name": "customerIdentifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountIdentifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "balanceAlertID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific low balance alert."
+        },
+        {
+          "info": {
+            "name": "Update a low balance alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tangocard.com/raas/v2/customers/:customerIdentifier/accounts/:accountIdentifier/lowbalance/:balanceAlertID",
+            "params": [
+              {
+                "name": "customerIdentifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountIdentifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "balanceAlertID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing low balance alert."
+        },
+        {
+          "info": {
+            "name": "Delete a low balance alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tangocard.com/raas/v2/customers/:customerIdentifier/accounts/:accountIdentifier/lowbalance/:balanceAlertID",
+            "params": [
+              {
+                "name": "customerIdentifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountIdentifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "balanceAlertID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a specific low balance alert."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

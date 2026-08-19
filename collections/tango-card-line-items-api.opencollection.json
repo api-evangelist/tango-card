@@ -1,0 +1,221 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tango RaaS Accounts Line Items API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Line Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List line items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/lineItems",
+            "params": [
+              {
+                "name": "accountIdentifier",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account identifier"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter line items created after this date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter line items created before this date"
+              },
+              {
+                "name": "elementsPerBlock",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of order line items."
+        },
+        {
+          "info": {
+            "name": "List reason codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/lineItems/reasonCodes"
+          },
+          "docs": "Retrieve all available reason codes for line item actions."
+        },
+        {
+          "info": {
+            "name": "Get a line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/lineItems/:referenceLineItemId",
+            "params": [
+              {
+                "name": "referenceLineItemId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific line item by reference ID."
+        },
+        {
+          "info": {
+            "name": "Update a line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tangocard.com/raas/v2/lineItems/:referenceLineItemID",
+            "params": [
+              {
+                "name": "referenceLineItemID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially update a line item."
+        },
+        {
+          "info": {
+            "name": "Cancel a line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tangocard.com/raas/v2/lineitems/:referenceLineItemID/cancel",
+            "params": [
+              {
+                "name": "referenceLineItemID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel a specific order line item."
+        },
+        {
+          "info": {
+            "name": "Freeze a line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tangocard.com/raas/v2/lineitems/:referenceLineItemid/freeze",
+            "params": [
+              {
+                "name": "referenceLineItemid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Freeze a specific order line item to prevent delivery."
+        },
+        {
+          "info": {
+            "name": "Unfreeze a line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tangocard.com/raas/v2/lineitems/:referenceLineItemID/unfreeze",
+            "params": [
+              {
+                "name": "referenceLineItemID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unfreeze a previously frozen line item to resume delivery."
+        },
+        {
+          "info": {
+            "name": "Reissue a line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tangocard.com/raas/v2/lineItems/:referenceLineItemID/reissue",
+            "params": [
+              {
+                "name": "referenceLineItemID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Reissue the reward for a specific line item."
+        },
+        {
+          "info": {
+            "name": "Resend a line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tangocard.com/raas/v2/lineItems/:referenceLineItemId/resends",
+            "params": [
+              {
+                "name": "referenceLineItemId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resend the reward delivery for a specific line item."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

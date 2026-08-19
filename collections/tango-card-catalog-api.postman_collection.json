@@ -1,0 +1,183 @@
+{
+  "item": [
+    {
+      "id": "8afba0d1-49ef-45ff-ad97-83f41f08d62c",
+      "name": "Catalog",
+      "description": {
+        "content": "Reward catalog access",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3fa5275c-0cd2-4d6e-bd87-f23a8df27632",
+          "name": "Get reward catalog",
+          "request": {
+            "name": "Get reward catalog",
+            "description": {
+              "content": "Retrieve the full reward catalog including all available gift cards and prepaid products.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalogs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "verbose",
+                  "value": "<boolean>",
+                  "description": "Return full catalog details"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8e73e662-27db-4f68-88ee-0987de0e6c21",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "verbose",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"brands\": [\n    {\n      \"brandKey\": \"string\",\n      \"brandName\": \"string\",\n      \"items\": [\n        {\n          \"utid\": \"string\",\n          \"rewardName\": \"string\",\n          \"brandName\": \"string\",\n          \"brandKey\": \"string\",\n          \"currencyCode\": \"string\",\n          \"minValue\": 1514.825562374209,\n          \"maxValue\": 2429.0737527990714,\n          \"fixedValue\": 5153.842307551389,\n          \"countries\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"utid\": \"string\",\n          \"rewardName\": \"string\",\n          \"brandName\": \"string\",\n          \"brandKey\": \"string\",\n          \"currencyCode\": \"string\",\n          \"minValue\": 9179.461053836,\n          \"maxValue\": 1608.2707981302924,\n          \"fixedValue\": 7041.824040214174,\n          \"countries\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    {\n      \"brandKey\": \"string\",\n      \"brandName\": \"string\",\n      \"items\": [\n        {\n          \"utid\": \"string\",\n          \"rewardName\": \"string\",\n          \"brandName\": \"string\",\n          \"brandKey\": \"string\",\n          \"currencyCode\": \"string\",\n          \"minValue\": 4830.903713832257,\n          \"maxValue\": 7961.233552811712,\n          \"fixedValue\": 4581.795116653745,\n          \"countries\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"utid\": \"string\",\n          \"rewardName\": \"string\",\n          \"brandName\": \"string\",\n          \"brandKey\": \"string\",\n          \"currencyCode\": \"string\",\n          \"minValue\": 3900.1806888205315,\n          \"maxValue\": 1471.2553948209072,\n          \"fixedValue\": 3819.2661083162093,\n          \"countries\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab2a41f3-a574-4dd8-8e32-0b85b2ffc082",
+              "name": "Authentication credentials missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "verbose",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timestamp\": \"2000-02-14T13:27:02.374Z\",\n  \"status\": 8134,\n  \"error\": \"string\",\n  \"message\": \"string\",\n  \"path\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tangocard.com/raas/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5504582f-b041-41cd-90f8-0f329d676c4d",
+    "name": "Tango RaaS Accounts Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.\n\n\nContact Support:\n Name: Tango Card Developer Support\n Email: devsupport@tangocard.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tango RaaS Accounts Choice Products API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Choice Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List choice products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/choiceProducts"
+          },
+          "docs": "Retrieve all available choice products (multi-brand gift cards)."
+        },
+        {
+          "info": {
+            "name": "Get a choice product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/choiceProducts/:utid",
+            "params": [
+              {
+                "name": "utid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific choice product by UTID."
+        },
+        {
+          "info": {
+            "name": "Get choice product catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/choiceProducts/:choiceProductUtid/catalog",
+            "params": [
+              {
+                "name": "choiceProductUtid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the catalog of items available within a specific choice product."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tango RaaS Accounts Brand Categories API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Brand Categories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List brand categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tangocard.com/raas/v2/brandCategories"
+          },
+          "docs": "Retrieve all available reward brand categories."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
