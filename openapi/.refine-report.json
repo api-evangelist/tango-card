@@ -33,6 +33,21 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "tango-card-accounts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-brand-categories-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-catalog-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-choice-products-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-countries-currencies-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-credential-types-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-customers-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-digital-templates-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-exchange-rates-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-fund-management-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-line-items-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-low-balance-alerts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tango-card-orders-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

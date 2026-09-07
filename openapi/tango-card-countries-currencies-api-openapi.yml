@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Tango RaaS Accounts Countries & Currencies API
   description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
@@ -46,6 +46,16 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    RewardCountry:
+      type: object
+      description: Represents a country where rewards are available
+      properties:
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+        countryName:
+          type: string
+          description: Full country name
     Error:
       type: object
       description: API error response
@@ -65,16 +75,6 @@ components:
         path:
           type: string
           description: Request path that caused the error
-    RewardCountry:
-      type: object
-      description: Represents a country where rewards are available
-      properties:
-        countryCode:
-          type: string
-          description: ISO 3166-1 alpha-2 country code
-        countryName:
-          type: string
-          description: Full country name
   responses:
     Unauthorized:
       description: Authentication credentials missing or invalid

@@ -337,3 +337,5 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-parent: tango
+x-relationship: product
