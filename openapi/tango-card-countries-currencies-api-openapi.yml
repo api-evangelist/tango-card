@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Tango RaaS Accounts Countries & Currencies API
-  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
-
-    '
+  title: Tango RaaS Countries & Currencies API
+  description: The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
   version: v2
   contact:
     name: Tango Card Developer Support
@@ -45,17 +43,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    RewardCountry:
-      type: object
-      description: Represents a country where rewards are available
-      properties:
-        countryCode:
-          type: string
-          description: ISO 3166-1 alpha-2 country code
-        countryName:
-          type: string
-          description: Full country name
     Error:
       type: object
       description: API error response
@@ -75,13 +70,16 @@ components:
         path:
           type: string
           description: Request path that caused the error
-  responses:
-    Unauthorized:
-      description: Authentication credentials missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    RewardCountry:
+      type: object
+      description: Represents a country where rewards are available
+      properties:
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+        countryName:
+          type: string
+          description: Full country name
   securitySchemes:
     basicAuth:
       type: http

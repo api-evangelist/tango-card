@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Tango RaaS Accounts Low Balance Alerts API
-  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
-
-    '
+  title: Tango RaaS Low Balance Alerts API
+  description: The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
   version: v2
   contact:
     name: Tango Card Developer Support
@@ -194,58 +192,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    LowBalanceAlert:
-      type: object
-      description: Low balance alert configuration for an account
-      properties:
-        balanceAlertID:
-          type: string
-          description: Unique identifier for the alert
-        accountIdentifier:
-          type: string
-          description: Account associated with the alert
-        threshold:
-          type: number
-          format: double
-          description: Balance threshold that triggers the alert
-        email:
-          type: string
-          format: email
-          description: Email to notify when threshold is reached
-    LowBalanceAlertCreate:
-      type: object
-      required:
-      - threshold
-      - email
-      properties:
-        threshold:
-          type: number
-          format: double
-          description: Balance threshold that triggers the alert
-        email:
-          type: string
-          format: email
-          description: Email to notify when threshold is reached
     Error:
       type: object
       description: API error response
@@ -265,6 +212,57 @@ components:
         path:
           type: string
           description: Request path that caused the error
+    LowBalanceAlertCreate:
+      type: object
+      required:
+      - threshold
+      - email
+      properties:
+        threshold:
+          type: number
+          format: double
+          description: Balance threshold that triggers the alert
+        email:
+          type: string
+          format: email
+          description: Email to notify when threshold is reached
+    LowBalanceAlert:
+      type: object
+      description: Low balance alert configuration for an account
+      properties:
+        balanceAlertID:
+          type: string
+          description: Unique identifier for the alert
+        accountIdentifier:
+          type: string
+          description: Account associated with the alert
+        threshold:
+          type: number
+          format: double
+          description: Balance threshold that triggers the alert
+        email:
+          type: string
+          format: email
+          description: Email to notify when threshold is reached
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

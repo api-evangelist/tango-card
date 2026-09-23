@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Tango RaaS Accounts Choice Products API
-  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
-
-    '
+  title: Tango RaaS Choice Products API
+  description: The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
   version: v2
   contact:
     name: Tango Card Developer Support
@@ -99,6 +97,25 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
     ChoiceProduct:
       type: object
       description: Represents a choice product (multi-brand gift card)
@@ -156,25 +173,6 @@ components:
           items:
             type: string
           description: Countries where reward is available
-    Error:
-      type: object
-      description: API error response
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        status:
-          type: integer
-          description: HTTP status code
-        error:
-          type: string
-          description: Short error description
-        message:
-          type: string
-          description: Detailed error message
-        path:
-          type: string
-          description: Request path that caused the error
   responses:
     NotFound:
       description: Resource not found

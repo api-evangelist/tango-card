@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Tango RaaS Accounts Orders API
-  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
-
-    '
+  title: Tango RaaS Orders API
+  description: The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
   version: v2
   contact:
     name: Tango Card Developer Support
@@ -156,32 +154,26 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Rate limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
     OrderCreate:
       type: object
       required:
@@ -217,38 +209,6 @@ components:
         externalRefID:
           type: string
           description: External reference identifier
-    LineItem:
-      type: object
-      description: Represents a line item within an order
-      properties:
-        referenceLineItemId:
-          type: string
-          description: Unique reference identifier for the line item
-        referenceOrderID:
-          type: string
-          description: Parent order reference identifier
-        status:
-          type: string
-          enum:
-          - PENDING
-          - FULFILLED
-          - CANCELLED
-          - FROZEN
-          - FAILED
-          description: Current status of the line item
-        amount:
-          type: number
-          format: double
-          description: Line item amount
-        currencyCode:
-          type: string
-          description: ISO 4217 currency code
-        utid:
-          type: string
-          description: Universal Token ID of the reward item
-        createdAt:
-          type: string
-          format: date-time
     Order:
       type: object
       description: Represents a reward order
@@ -288,6 +248,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
+    LineItem:
+      type: object
+      description: Represents a line item within an order
+      properties:
+        referenceLineItemId:
+          type: string
+          description: Unique reference identifier for the line item
+        referenceOrderID:
+          type: string
+          description: Parent order reference identifier
+        status:
+          type: string
+          enum:
+          - PENDING
+          - FULFILLED
+          - CANCELLED
+          - FROZEN
+          - FAILED
+          description: Current status of the line item
+        amount:
+          type: number
+          format: double
+          description: Line item amount
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        utid:
+          type: string
+          description: Universal Token ID of the reward item
+        createdAt:
+          type: string
+          format: date-time
     RecipientInfo:
       type: object
       properties:
@@ -301,25 +293,31 @@ components:
           type: string
           format: email
           description: Recipient email address
-    Error:
-      type: object
-      description: API error response
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        status:
-          type: integer
-          description: HTTP status code
-        error:
-          type: string
-          description: Short error description
-        message:
-          type: string
-          description: Detailed error message
-        path:
-          type: string
-          description: Request path that caused the error
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

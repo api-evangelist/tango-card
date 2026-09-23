@@ -1,19 +1,7 @@
 {
   "provider": "tango-card",
   "sources": [
-    "tango-card-accounts-api-openapi.yml",
-    "tango-card-brand-categories-api-openapi.yml",
-    "tango-card-catalog-api-openapi.yml",
-    "tango-card-choice-products-api-openapi.yml",
-    "tango-card-countries-currencies-api-openapi.yml",
-    "tango-card-credential-types-api-openapi.yml",
-    "tango-card-customers-api-openapi.yml",
-    "tango-card-digital-templates-api-openapi.yml",
-    "tango-card-exchange-rates-api-openapi.yml",
-    "tango-card-fund-management-api-openapi.yml",
-    "tango-card-line-items-api-openapi.yml",
-    "tango-card-low-balance-alerts-api-openapi.yml",
-    "tango-card-orders-api-openapi.yml"
+    "_original/tango-raas-api-openapi.yml"
   ],
   "outputs": [
     "tango-card-accounts-api-openapi.yml",
@@ -34,20 +22,23 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "tango-card-accounts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-brand-categories-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-catalog-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-choice-products-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-countries-currencies-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-credential-types-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-customers-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-digital-templates-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-exchange-rates-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-fund-management-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-line-items-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-low-balance-alerts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tango-card-orders-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "tango-raas-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "tango-card-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-brand-categories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-catalog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-choice-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-countries-currencies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-credential-types-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-digital-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-exchange-rates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-fund-management-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-line-items-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-low-balance-alerts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tango-card-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Tango RaaS Accounts Fund Management API
-  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
-
-    '
+  title: Tango RaaS Fund Management API
+  description: The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
   version: v2
   contact:
     name: Tango Card Developer Support
@@ -220,42 +218,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    CreditCard:
-      type: object
-      description: Represents a registered credit card
-      properties:
-        token:
-          type: string
-          description: Tokenized credit card identifier
-        lastFour:
-          type: string
-          description: Last four digits of the card
-        expiration:
-          type: string
-          description: Card expiration date (MM/YYYY)
-        cardType:
-          type: string
-          description: Card network type (VISA, MC, etc.)
     CreditCardDeposit:
       type: object
       description: Represents a credit card deposit transaction
@@ -295,6 +258,41 @@ components:
         path:
           type: string
           description: Request path that caused the error
+    CreditCard:
+      type: object
+      description: Represents a registered credit card
+      properties:
+        token:
+          type: string
+          description: Tokenized credit card identifier
+        lastFour:
+          type: string
+          description: Last four digits of the card
+        expiration:
+          type: string
+          description: Card expiration date (MM/YYYY)
+        cardType:
+          type: string
+          description: Card network type (VISA, MC, etc.)
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

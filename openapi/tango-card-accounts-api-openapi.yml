@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Tango RaaS Accounts API
-  description: 'The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
-
-    '
+  description: The Tango Rewards as a Service (RaaS) REST API enables businesses to programmatically send gift cards, manage reward orders, fund accounts, access the global reward catalog, configure webhooks, and track delivery status for digital rewards and incentive programs.
   version: v2
   contact:
     name: Tango Card Developer Support
@@ -164,42 +162,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    AccountCreate:
-      type: object
-      required:
-      - accountIdentifier
-      - displayName
-      - currencyCode
-      properties:
-        accountIdentifier:
-          type: string
-          description: Unique identifier for the account
-        displayName:
-          type: string
-          description: Human-readable name for the account
-        currencyCode:
-          type: string
-          description: ISO 4217 currency code
     Account:
       type: object
       description: Represents a customer account with balance
@@ -249,6 +212,41 @@ components:
         path:
           type: string
           description: Request path that caused the error
+    AccountCreate:
+      type: object
+      required:
+      - accountIdentifier
+      - displayName
+      - currencyCode
+      properties:
+        accountIdentifier:
+          type: string
+          description: Unique identifier for the account
+        displayName:
+          type: string
+          description: Human-readable name for the account
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http
