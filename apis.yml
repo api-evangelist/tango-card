@@ -38,6 +38,8 @@ tags:
   - Digital Rewards
   - Prepaid Cards
   - Payments
+  - Loyalty
+  - Loyalty & Incentives
 apis:
 - aid: tango-card:tango-card-accounts-api
   name: Tango Card Accounts API

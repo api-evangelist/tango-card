@@ -51,6 +51,16 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    RewardCountry:
+      type: object
+      description: Represents a country where rewards are available
+      properties:
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+        countryName:
+          type: string
+          description: Full country name
     Error:
       type: object
       description: API error response
@@ -70,16 +80,6 @@ components:
         path:
           type: string
           description: Request path that caused the error
-    RewardCountry:
-      type: object
-      description: Represents a country where rewards are available
-      properties:
-        countryCode:
-          type: string
-          description: ISO 3166-1 alpha-2 country code
-        countryName:
-          type: string
-          description: Full country name
   securitySchemes:
     basicAuth:
       type: http

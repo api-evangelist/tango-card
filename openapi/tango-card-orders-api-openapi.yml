@@ -155,60 +155,38 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
+    LineItem:
       type: object
-      description: API error response
+      description: Represents a line item within an order
       properties:
-        timestamp:
+        referenceLineItemId:
           type: string
-          format: date-time
+          description: Unique reference identifier for the line item
+        referenceOrderID:
+          type: string
+          description: Parent order reference identifier
         status:
-          type: integer
-          description: HTTP status code
-        error:
           type: string
-          description: Short error description
-        message:
-          type: string
-          description: Detailed error message
-        path:
-          type: string
-          description: Request path that caused the error
-    OrderCreate:
-      type: object
-      required:
-      - customerIdentifier
-      - accountIdentifier
-      - amount
-      - utid
-      properties:
-        customerIdentifier:
-          type: string
-          description: Customer placing the order
-        accountIdentifier:
-          type: string
-          description: Account to charge for the order
+          enum:
+          - PENDING
+          - FULFILLED
+          - CANCELLED
+          - FROZEN
+          - FAILED
+          description: Current status of the line item
         amount:
           type: number
           format: double
-          description: Reward amount
+          description: Line item amount
         currencyCode:
           type: string
-          description: ISO 4217 currency code (default USD)
+          description: ISO 4217 currency code
         utid:
           type: string
           description: Universal Token ID of the reward item
-        recipientInfo:
-          $ref: '#/components/schemas/RecipientInfo'
-        sendEmail:
-          type: boolean
-          description: Whether to send the reward via email
-        notes:
+        createdAt:
           type: string
-          description: Internal notes for the order
-        externalRefID:
-          type: string
-          description: External reference identifier
+          format: date-time
     Order:
       type: object
       description: Represents a reward order
@@ -248,38 +226,41 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
-    LineItem:
+    OrderCreate:
       type: object
-      description: Represents a line item within an order
+      required:
+      - customerIdentifier
+      - accountIdentifier
+      - amount
+      - utid
       properties:
-        referenceLineItemId:
+        customerIdentifier:
           type: string
-          description: Unique reference identifier for the line item
-        referenceOrderID:
+          description: Customer placing the order
+        accountIdentifier:
           type: string
-          description: Parent order reference identifier
-        status:
-          type: string
-          enum:
-          - PENDING
-          - FULFILLED
-          - CANCELLED
-          - FROZEN
-          - FAILED
-          description: Current status of the line item
+          description: Account to charge for the order
         amount:
           type: number
           format: double
-          description: Line item amount
+          description: Reward amount
         currencyCode:
           type: string
-          description: ISO 4217 currency code
+          description: ISO 4217 currency code (default USD)
         utid:
           type: string
           description: Universal Token ID of the reward item
-        createdAt:
+        recipientInfo:
+          $ref: '#/components/schemas/RecipientInfo'
+        sendEmail:
+          type: boolean
+          description: Whether to send the reward via email
+        notes:
           type: string
-          format: date-time
+          description: Internal notes for the order
+        externalRefID:
+          type: string
+          description: External reference identifier
     RecipientInfo:
       type: object
       properties:
@@ -293,13 +274,26 @@ components:
           type: string
           format: email
           description: Recipient email address
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
   responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Authentication credentials missing or invalid
       content:
@@ -308,6 +302,12 @@ components:
             $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
       content:
         application/json:
           schema:

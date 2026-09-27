@@ -239,6 +239,22 @@ components:
         createdAt:
           type: string
           format: date-time
+    CreditCard:
+      type: object
+      description: Represents a registered credit card
+      properties:
+        token:
+          type: string
+          description: Tokenized credit card identifier
+        lastFour:
+          type: string
+          description: Last four digits of the card
+        expiration:
+          type: string
+          description: Card expiration date (MM/YYYY)
+        cardType:
+          type: string
+          description: Card network type (VISA, MC, etc.)
     Error:
       type: object
       description: API error response
@@ -258,23 +274,13 @@ components:
         path:
           type: string
           description: Request path that caused the error
-    CreditCard:
-      type: object
-      description: Represents a registered credit card
-      properties:
-        token:
-          type: string
-          description: Tokenized credit card identifier
-        lastFour:
-          type: string
-          description: Last four digits of the card
-        expiration:
-          type: string
-          description: Card expiration date (MM/YYYY)
-        cardType:
-          type: string
-          description: Card network type (VISA, MC, etc.)
   responses:
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Invalid request parameters
       content:
@@ -283,12 +289,6 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials missing or invalid
       content:
         application/json:
           schema:

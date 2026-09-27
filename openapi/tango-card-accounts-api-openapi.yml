@@ -163,6 +163,28 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    AccountCreate:
+      type: object
+      required:
+      - accountIdentifier
+      - displayName
+      - currencyCode
+      properties:
+        accountIdentifier:
+          type: string
+          description: Unique identifier for the account
+        displayName:
+          type: string
+          description: Human-readable name for the account
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+    AccountUpdate:
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: Updated human-readable name for the account
     Account:
       type: object
       description: Represents a customer account with balance
@@ -187,12 +209,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the account was created
-    AccountUpdate:
-      type: object
-      properties:
-        displayName:
-          type: string
-          description: Updated human-readable name for the account
     Error:
       type: object
       description: API error response
@@ -212,23 +228,13 @@ components:
         path:
           type: string
           description: Request path that caused the error
-    AccountCreate:
-      type: object
-      required:
-      - accountIdentifier
-      - displayName
-      - currencyCode
-      properties:
-        accountIdentifier:
-          type: string
-          description: Unique identifier for the account
-        displayName:
-          type: string
-          description: Human-readable name for the account
-        currencyCode:
-          type: string
-          description: ISO 4217 currency code
   responses:
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Invalid request parameters
       content:
@@ -237,12 +243,6 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials missing or invalid
       content:
         application/json:
           schema:

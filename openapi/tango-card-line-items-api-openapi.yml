@@ -303,34 +303,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    LineItemUpdate:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Updated status for the line item
-        notes:
-          type: string
-          description: Notes for the status change
-    Error:
-      type: object
-      description: API error response
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        status:
-          type: integer
-          description: HTTP status code
-        error:
-          type: string
-          description: Short error description
-        message:
-          type: string
-          description: Detailed error message
-        path:
-          type: string
-          description: Request path that caused the error
     ReasonCode:
       type: object
       description: Reason code for line item actions
@@ -373,7 +345,41 @@ components:
         createdAt:
           type: string
           format: date-time
+    LineItemUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Updated status for the line item
+        notes:
+          type: string
+          description: Notes for the status change
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
   responses:
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Invalid request parameters
       content:
@@ -382,12 +388,6 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials missing or invalid
       content:
         application/json:
           schema:

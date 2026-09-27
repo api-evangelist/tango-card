@@ -51,6 +51,20 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    ExchangeRate:
+      type: object
+      description: Currency exchange rate information
+      properties:
+        fromCurrencyCode:
+          type: string
+          description: Source currency ISO 4217 code
+        toCurrencyCode:
+          type: string
+          description: Target currency ISO 4217 code
+        rate:
+          type: number
+          format: double
+          description: Exchange rate
     Error:
       type: object
       description: API error response
@@ -70,20 +84,6 @@ components:
         path:
           type: string
           description: Request path that caused the error
-    ExchangeRate:
-      type: object
-      description: Currency exchange rate information
-      properties:
-        fromCurrencyCode:
-          type: string
-          description: Source currency ISO 4217 code
-        toCurrencyCode:
-          type: string
-          description: Target currency ISO 4217 code
-        rate:
-          type: number
-          format: double
-          description: Exchange rate
   securitySchemes:
     basicAuth:
       type: http
