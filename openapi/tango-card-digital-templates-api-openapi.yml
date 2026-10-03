@@ -141,12 +141,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    Unauthorized:
-      description: Authentication credentials missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Invalid request parameters
       content:
@@ -155,6 +149,12 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
       content:
         application/json:
           schema:
@@ -176,20 +176,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    DigitalTemplateCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Template name
-        subject:
-          type: string
-          description: Email subject line
-        htmlContent:
-          type: string
-          description: HTML content of the template
     Error:
       type: object
       description: API error response
@@ -209,6 +195,20 @@ components:
         path:
           type: string
           description: Request path that caused the error
+    DigitalTemplateCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Template name
+        subject:
+          type: string
+          description: Email subject line
+        htmlContent:
+          type: string
+          description: HTML content of the template
   securitySchemes:
     basicAuth:
       type: http

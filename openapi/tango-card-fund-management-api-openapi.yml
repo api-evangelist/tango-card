@@ -218,27 +218,26 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    CreditCardDeposit:
-      type: object
-      description: Represents a credit card deposit transaction
-      properties:
-        depositId:
-          type: string
-          description: Unique deposit identifier
-        amount:
-          type: number
-          format: double
-          description: Deposit amount
-        currencyCode:
-          type: string
-          description: ISO 4217 currency code
-        status:
-          type: string
-          description: Deposit status
-        createdAt:
-          type: string
-          format: date-time
     CreditCard:
       type: object
       description: Represents a registered credit card
@@ -274,25 +273,26 @@ components:
         path:
           type: string
           description: Request path that caused the error
-  responses:
-    Unauthorized:
-      description: Authentication credentials missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    CreditCardDeposit:
+      type: object
+      description: Represents a credit card deposit transaction
+      properties:
+        depositId:
+          type: string
+          description: Unique deposit identifier
+        amount:
+          type: number
+          format: double
+          description: Deposit amount
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        status:
+          type: string
+          description: Deposit status
+        createdAt:
+          type: string
+          format: date-time
   securitySchemes:
     basicAuth:
       type: http

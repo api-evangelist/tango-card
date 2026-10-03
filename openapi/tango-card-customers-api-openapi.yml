@@ -90,7 +90,38 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    CustomerCreate:
+      type: object
+      required:
+      - customerIdentifier
+      - displayName
+      properties:
+        customerIdentifier:
+          type: string
+          description: Unique identifier for the customer
+        displayName:
+          type: string
+          description: Human-readable name for the customer
     Customer:
       type: object
       description: Represents a platform customer
@@ -111,18 +142,6 @@ components:
           - ACTIVE
           - INACTIVE
           description: Current status of the customer
-    CustomerCreate:
-      type: object
-      required:
-      - customerIdentifier
-      - displayName
-      properties:
-        customerIdentifier:
-          type: string
-          description: Unique identifier for the customer
-        displayName:
-          type: string
-          description: Human-readable name for the customer
     Error:
       type: object
       description: API error response
@@ -142,25 +161,6 @@ components:
         path:
           type: string
           description: Request path that caused the error
-  responses:
-    Unauthorized:
-      description: Authentication credentials missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http
