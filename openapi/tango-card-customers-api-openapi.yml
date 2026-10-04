@@ -122,6 +122,25 @@ components:
         displayName:
           type: string
           description: Human-readable name for the customer
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
     Customer:
       type: object
       description: Represents a platform customer
@@ -142,25 +161,6 @@ components:
           - ACTIVE
           - INACTIVE
           description: Current status of the customer
-    Error:
-      type: object
-      description: API error response
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        status:
-          type: integer
-          description: HTTP status code
-        error:
-          type: string
-          description: Short error description
-        message:
-          type: string
-          description: Detailed error message
-        path:
-          type: string
-          description: Request path that caused the error
   securitySchemes:
     basicAuth:
       type: http

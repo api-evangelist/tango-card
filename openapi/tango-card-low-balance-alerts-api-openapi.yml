@@ -212,6 +212,20 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    LowBalanceAlertCreate:
+      type: object
+      required:
+      - threshold
+      - email
+      properties:
+        threshold:
+          type: number
+          format: double
+          description: Balance threshold that triggers the alert
+        email:
+          type: string
+          format: email
+          description: Email to notify when threshold is reached
     LowBalanceAlert:
       type: object
       description: Low balance alert configuration for an account
@@ -222,20 +236,6 @@ components:
         accountIdentifier:
           type: string
           description: Account associated with the alert
-        threshold:
-          type: number
-          format: double
-          description: Balance threshold that triggers the alert
-        email:
-          type: string
-          format: email
-          description: Email to notify when threshold is reached
-    LowBalanceAlertCreate:
-      type: object
-      required:
-      - threshold
-      - email
-      properties:
         threshold:
           type: number
           format: double

@@ -182,22 +182,30 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    AccountCreate:
+    Account:
       type: object
-      required:
-      - accountIdentifier
-      - displayName
-      - currencyCode
+      description: Represents a customer account with balance
       properties:
         accountIdentifier:
           type: string
           description: Unique identifier for the account
+        customerIdentifier:
+          type: string
+          description: Identifier of the parent customer
         displayName:
           type: string
           description: Human-readable name for the account
         currencyCode:
           type: string
-          description: ISO 4217 currency code
+          description: ISO 4217 currency code for the account
+        currentBalance:
+          type: number
+          format: double
+          description: Current account balance
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the account was created
     AccountUpdate:
       type: object
       properties:
@@ -223,30 +231,22 @@ components:
         path:
           type: string
           description: Request path that caused the error
-    Account:
+    AccountCreate:
       type: object
-      description: Represents a customer account with balance
+      required:
+      - accountIdentifier
+      - displayName
+      - currencyCode
       properties:
         accountIdentifier:
           type: string
           description: Unique identifier for the account
-        customerIdentifier:
-          type: string
-          description: Identifier of the parent customer
         displayName:
           type: string
           description: Human-readable name for the account
         currencyCode:
           type: string
-          description: ISO 4217 currency code for the account
-        currentBalance:
-          type: number
-          format: double
-          description: Current account balance
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp when the account was created
+          description: ISO 4217 currency code
   securitySchemes:
     basicAuth:
       type: http

@@ -238,41 +238,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    CreditCard:
-      type: object
-      description: Represents a registered credit card
-      properties:
-        token:
-          type: string
-          description: Tokenized credit card identifier
-        lastFour:
-          type: string
-          description: Last four digits of the card
-        expiration:
-          type: string
-          description: Card expiration date (MM/YYYY)
-        cardType:
-          type: string
-          description: Card network type (VISA, MC, etc.)
-    Error:
-      type: object
-      description: API error response
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        status:
-          type: integer
-          description: HTTP status code
-        error:
-          type: string
-          description: Short error description
-        message:
-          type: string
-          description: Detailed error message
-        path:
-          type: string
-          description: Request path that caused the error
     CreditCardDeposit:
       type: object
       description: Represents a credit card deposit transaction
@@ -293,6 +258,41 @@ components:
         createdAt:
           type: string
           format: date-time
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
+    CreditCard:
+      type: object
+      description: Represents a registered credit card
+      properties:
+        token:
+          type: string
+          description: Tokenized credit card identifier
+        lastFour:
+          type: string
+          description: Last four digits of the card
+        expiration:
+          type: string
+          description: Card expiration date (MM/YYYY)
+        cardType:
+          type: string
+          description: Card network type (VISA, MC, etc.)
   securitySchemes:
     basicAuth:
       type: http

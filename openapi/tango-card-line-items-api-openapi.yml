@@ -322,6 +322,16 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    ReasonCode:
+      type: object
+      description: Reason code for line item actions
+      properties:
+        reasonCode:
+          type: string
+          description: Reason code identifier
+        description:
+          type: string
+          description: Description of the reason code
     LineItemUpdate:
       type: object
       properties:
@@ -331,25 +341,6 @@ components:
         notes:
           type: string
           description: Notes for the status change
-    Error:
-      type: object
-      description: API error response
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        status:
-          type: integer
-          description: HTTP status code
-        error:
-          type: string
-          description: Short error description
-        message:
-          type: string
-          description: Detailed error message
-        path:
-          type: string
-          description: Request path that caused the error
     LineItem:
       type: object
       description: Represents a line item within an order
@@ -382,16 +373,25 @@ components:
         createdAt:
           type: string
           format: date-time
-    ReasonCode:
+    Error:
       type: object
-      description: Reason code for line item actions
+      description: API error response
       properties:
-        reasonCode:
+        timestamp:
           type: string
-          description: Reason code identifier
-        description:
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
           type: string
-          description: Description of the reason code
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
   securitySchemes:
     basicAuth:
       type: http

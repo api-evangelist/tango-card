@@ -160,22 +160,20 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    DigitalTemplate:
+    DigitalTemplateCreate:
       type: object
-      description: Represents a digital email template
+      required:
+      - name
       properties:
-        etid:
-          type: string
-          description: Email template identifier
         name:
           type: string
           description: Template name
-        status:
+        subject:
           type: string
-          description: Template status (ACTIVE, INACTIVE)
-        createdAt:
+          description: Email subject line
+        htmlContent:
           type: string
-          format: date-time
+          description: HTML content of the template
     Error:
       type: object
       description: API error response
@@ -195,20 +193,22 @@ components:
         path:
           type: string
           description: Request path that caused the error
-    DigitalTemplateCreate:
+    DigitalTemplate:
       type: object
-      required:
-      - name
+      description: Represents a digital email template
       properties:
+        etid:
+          type: string
+          description: Email template identifier
         name:
           type: string
           description: Template name
-        subject:
+        status:
           type: string
-          description: Email subject line
-        htmlContent:
+          description: Template status (ACTIVE, INACTIVE)
+        createdAt:
           type: string
-          description: HTML content of the template
+          format: date-time
   securitySchemes:
     basicAuth:
       type: http

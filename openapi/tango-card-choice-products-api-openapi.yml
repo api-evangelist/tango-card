@@ -96,20 +96,43 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    CatalogItem:
+      type: object
+      description: Represents a reward item in the catalog
+      properties:
+        utid:
+          type: string
+          description: Universal Token ID for this reward item
+        rewardName:
+          type: string
+          description: Name of the reward
+        brandName:
+          type: string
+          description: Brand offering the reward
+        brandKey:
+          type: string
+          description: Unique brand identifier
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+        minValue:
+          type: number
+          format: double
+          description: Minimum denomination value
+        maxValue:
+          type: number
+          format: double
+          description: Maximum denomination value
+        fixedValue:
+          type: number
+          format: double
+          description: Fixed denomination value (if applicable)
+        countries:
+          type: array
+          items:
+            type: string
+          description: Countries where reward is available
     ChoiceProduct:
       type: object
       description: Represents a choice product (multi-brand gift card)
@@ -150,42 +173,19 @@ components:
         path:
           type: string
           description: Request path that caused the error
-    CatalogItem:
-      type: object
-      description: Represents a reward item in the catalog
-      properties:
-        utid:
-          type: string
-          description: Universal Token ID for this reward item
-        rewardName:
-          type: string
-          description: Name of the reward
-        brandName:
-          type: string
-          description: Brand offering the reward
-        brandKey:
-          type: string
-          description: Unique brand identifier
-        currencyCode:
-          type: string
-          description: ISO 4217 currency code
-        minValue:
-          type: number
-          format: double
-          description: Minimum denomination value
-        maxValue:
-          type: number
-          format: double
-          description: Maximum denomination value
-        fixedValue:
-          type: number
-          format: double
-          description: Fixed denomination value (if applicable)
-        countries:
-          type: array
-          items:
-            type: string
-          description: Countries where reward is available
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http
