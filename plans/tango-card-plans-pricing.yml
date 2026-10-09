@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Tango Card Plans and Pricing
 description: Tango Card (Tango) does not publish fixed subscription tiers. Access to the RaaS API is granted through a consultative sales process. The only recurring cost is the face value of rewards sent; platform and API access fees are determined per agreement. Prospective users contact sales@tangocard.com or request a demo to obtain a custom quote.
 url: https://www.tangocard.com/solutions/raas-api
@@ -21,3 +25,17 @@ plans:
       email: sales@tangocard.com
       phone: "+1-925-738-3100"
       demo: https://www.tangocard.com/request-a-demo
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units: []
+  plans:
+  - name: RaaS API (Custom)
+    access: other
+    model: negotiated
+    model_how: derived
+    units:
+    - other
+    periods: []

@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Tango Card API Rate Limits
 description: Tango Card enforces a 1 TPS (transaction per second) rate limit across all API endpoints. Rate-limit headers are not publicly documented. The recommended pattern for handling rate limit errors on order placement is to pause briefly and retry using the idempotent externalRefID parameter to prevent duplicate orders.
 url: https://developers.tangocard.com/docs/best-practices
