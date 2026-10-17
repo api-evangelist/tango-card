@@ -182,6 +182,41 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    AccountCreate:
+      type: object
+      required:
+      - accountIdentifier
+      - displayName
+      - currencyCode
+      properties:
+        accountIdentifier:
+          type: string
+          description: Unique identifier for the account
+        displayName:
+          type: string
+          description: Human-readable name for the account
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+    Error:
+      type: object
+      description: API error response
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Short error description
+        message:
+          type: string
+          description: Detailed error message
+        path:
+          type: string
+          description: Request path that caused the error
     Account:
       type: object
       description: Represents a customer account with balance
@@ -212,41 +247,6 @@ components:
         displayName:
           type: string
           description: Updated human-readable name for the account
-    Error:
-      type: object
-      description: API error response
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-        status:
-          type: integer
-          description: HTTP status code
-        error:
-          type: string
-          description: Short error description
-        message:
-          type: string
-          description: Detailed error message
-        path:
-          type: string
-          description: Request path that caused the error
-    AccountCreate:
-      type: object
-      required:
-      - accountIdentifier
-      - displayName
-      - currencyCode
-      properties:
-        accountIdentifier:
-          type: string
-          description: Unique identifier for the account
-        displayName:
-          type: string
-          description: Human-readable name for the account
-        currencyCode:
-          type: string
-          description: ISO 4217 currency code
   securitySchemes:
     basicAuth:
       type: http

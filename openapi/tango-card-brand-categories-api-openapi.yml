@@ -44,16 +44,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    BrandCategory:
-      type: object
-      description: Represents a reward brand category
-      properties:
-        id:
-          type: integer
-          description: Category identifier
-        name:
-          type: string
-          description: Category name
     Error:
       type: object
       description: API error response
@@ -73,6 +63,16 @@ components:
         path:
           type: string
           description: Request path that caused the error
+    BrandCategory:
+      type: object
+      description: Represents a reward brand category
+      properties:
+        id:
+          type: integer
+          description: Category identifier
+        name:
+          type: string
+          description: Category name
   responses:
     Unauthorized:
       description: Authentication credentials missing or invalid

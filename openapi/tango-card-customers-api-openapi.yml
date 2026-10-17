@@ -110,18 +110,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    CustomerCreate:
-      type: object
-      required:
-      - customerIdentifier
-      - displayName
-      properties:
-        customerIdentifier:
-          type: string
-          description: Unique identifier for the customer
-        displayName:
-          type: string
-          description: Human-readable name for the customer
     Error:
       type: object
       description: API error response
@@ -161,6 +149,18 @@ components:
           - ACTIVE
           - INACTIVE
           description: Current status of the customer
+    CustomerCreate:
+      type: object
+      required:
+      - customerIdentifier
+      - displayName
+      properties:
+        customerIdentifier:
+          type: string
+          description: Unique identifier for the customer
+        displayName:
+          type: string
+          description: Human-readable name for the customer
   securitySchemes:
     basicAuth:
       type: http
