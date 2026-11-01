@@ -66,29 +66,175 @@
 
 Tango Card is a digital rewards and gift card distribution platform providing a REST API (Rewards as a Service, RaaS) for sending gift cards, managing reward orders, tracking delivery, and accessing a global catalog of 3,100+ reward options including e-gift cards, prepaid cards, and charitable donations.
 
-## APIs
+**Areas:** Gift Cards · Rewards · Incentives · Digital Rewards · Prepaid Cards · Payments · Loyalty · Loyalty & Incentives
 
-- **Tango RaaS API** - REST API for programmatic reward delivery, order management, catalog access, account funding, and webhook event subscriptions.
-  - Production: `https://api.tangocard.com/raas/v2`
-  - Sandbox: `https://integration-api.tangocard.com/raas/v2`
-  - Docs: https://developers.tangocard.com/
+## Tango Card on APIs.io
 
-## Resources
+Everything profiled for Tango Card is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/tango-card/](https://apis.io/providers/tango-card/)** — or go straight to one of the APIs or properties below.
+
+### APIs (13)
+
+- [Tango Card Accounts API](https://apis.io/apis/tango-card/tango-card-accounts-api/) — Manage customer accounts and balances
+- [Tango Card Brand Categories API](https://apis.io/apis/tango-card/tango-card-brand-categories-api/) — Reward brand category information
+- [Tango Card Catalog API](https://apis.io/apis/tango-card/tango-card-catalog-api/) — Reward catalog access
+- [Tango Card Choice Products API](https://apis.io/apis/tango-card/tango-card-choice-products-api/) — Choice product management
+- [Tango Card Countries & Currencies API](https://apis.io/apis/tango-card/tango-card-countries-currencies-api/) — Supported reward countries
+- [Tango Card Credential Types API](https://apis.io/apis/tango-card/tango-card-credential-types-api/) — Credential type definitions
+- [Tango Card Customers API](https://apis.io/apis/tango-card/tango-card-customers-api/) — Manage platform customers
+- [Tango Card Digital Templates API](https://apis.io/apis/tango-card/tango-card-digital-templates-api/) — Email and digital template management
+- [Tango Card Exchange Rates API](https://apis.io/apis/tango-card/tango-card-exchange-rates-api/) — Currency exchange rates
+- [Tango Card Fund Management API](https://apis.io/apis/tango-card/tango-card-fund-management-api/) — Credit card deposits, registrations, and fund transfers
+- [Tango Card Line Items API](https://apis.io/apis/tango-card/tango-card-line-items-api/) — Order line item management and actions
+- [Tango Card Low Balance Alerts API](https://apis.io/apis/tango-card/tango-card-low-balance-alerts-api/) — Account low balance alert configuration
+- [Tango Card Orders API](https://apis.io/apis/tango-card/tango-card-orders-api/) — Reward order creation and management
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Tango Card Agentic Access](https://apis.io/agentic-access/tango-card/tango-card-agentic-access/)
+
+#### JSON Schema (2)
+
+The data models the API reads and writes.
+
+- [Tango RaaS Catalog Item](https://apis.io/schemas/tango-card/tango-raas-catalog-item/)
+- [Tango RaaS Order](https://apis.io/schemas/tango-card/tango-raas-order/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Tango Raas Context](https://apis.io/jsonld/tango-card/tango-raas-context/)
+
+#### Examples (5)
+
+Example requests and responses.
+
+- [Catalog Item Example](https://apis.io/examples/tango-card/catalog-item-example/)
+- [Create Account Request](https://apis.io/examples/tango-card/create-account-request/)
+- [Create Customer Request](https://apis.io/examples/tango-card/create-customer-request/)
+- [Create Order Request](https://apis.io/examples/tango-card/create-order-request/)
+- [Create Order Response](https://apis.io/examples/tango-card/create-order-response/)
+
+#### Collections (13)
+
+Postman and Open Collection request collections.
+
+- [Tango RaaS Accounts API](https://apis.io/collections/tango-card/open-tango-card-accounts-api/)
+- [Tango RaaS Accounts Brand Categories API](https://apis.io/collections/tango-card/open-tango-card-brand-categories-api/)
+- [Tango RaaS Accounts Catalog API](https://apis.io/collections/tango-card/open-tango-card-catalog-api/)
+- [Tango RaaS Accounts Choice Products API](https://apis.io/collections/tango-card/open-tango-card-choice-products-api/)
+- [Tango RaaS Accounts Countries & Currencies API](https://apis.io/collections/tango-card/open-tango-card-countries-currencies-api/)
+- [Tango RaaS Accounts Credential Types API](https://apis.io/collections/tango-card/open-tango-card-credential-types-api/)
+- [Tango RaaS Accounts Customers API](https://apis.io/collections/tango-card/open-tango-card-customers-api/)
+- [Tango RaaS Accounts Digital Templates API](https://apis.io/collections/tango-card/open-tango-card-digital-templates-api/)
+- [Tango RaaS Accounts Exchange Rates API](https://apis.io/collections/tango-card/open-tango-card-exchange-rates-api/)
+- [Tango RaaS Accounts Fund Management API](https://apis.io/collections/tango-card/open-tango-card-fund-management-api/)
+- [Tango RaaS Accounts Line Items API](https://apis.io/collections/tango-card/open-tango-card-line-items-api/)
+- [Tango RaaS Accounts Low Balance Alerts API](https://apis.io/collections/tango-card/open-tango-card-low-balance-alerts-api/)
+- [Tango RaaS Accounts Orders API](https://apis.io/collections/tango-card/open-tango-card-orders-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Tango Card — jsonschema rules](https://apis.io/rules/tango-card/tango-card-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Tango Card Authentication](https://apis.io/security/tango-card/tango-card-authentication/)
+- [Tango Card Domain Security](https://apis.io/security/tango-card/tango-card-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Tango Card Scopes](https://apis.io/scopes/tango-card/tango-card-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Tango Card Plans Pricing](https://apis.io/plans/tango-card/tango-card-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Tango Card Rate Limits](https://apis.io/rate-limits/tango-card/tango-card-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Tango Card Finops](https://apis.io/finops/tango-card/tango-card-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.tangocard.com)
-- [Developer Documentation](https://developers.tangocard.com/)
-- [API Endpoint Overview](https://developers.tangocard.com/docs/api-endpoint-overview)
-- [GitHub Organization](https://github.com/tangocard)
-- [LinkedIn](https://www.linkedin.com/company/tango-card-inc)
+- [Documentation](https://developers.tangocard.com/)
+- [Pricing](https://www.tangocard.com/solutions/raas-api)
 - [Blog](https://www.tangocard.com/blog)
-- [Status Page](https://status.tango.us/)
-- [X / Twitter](https://x.com/tangocard)
+- [Status](https://status.tango.us/)
 
-## Contact
+## API Evangelist rating
 
-- Developer Support: devsupport@tangocard.com
-- Sales: sales@tangocard.com
+**Kin Score 31.6** — thin · rubric 0.24.0 · scored 2026-10-17
 
-## Maintainer
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 57.5 |
+| Contract governance | 9.8 |
+| Operational transparency | 22.4 |
+| Developer ergonomics | 16.7 |
+| Access clarity | 15.8 |
 
-Kin Lane (kin@apievangelist.com)
+**Agent readiness 26.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | unknown |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.1** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/tango-card/](https://apis.io/providers/tango-card/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Tango Card: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/tango-card/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
